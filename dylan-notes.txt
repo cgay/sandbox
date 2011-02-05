@@ -4,41 +4,61 @@
 Admin 
 =====
 
-+ Change archive/ to MIT license. 
+* Change archive/ to MIT license. 
 
-+ Is there a good way to browse the DRM directly from the source?  It
+* Is there a good way to browse the DRM directly from the source?  It
   links to pages without ".html" appended.
 
 
-Projects
-========
+Documentation
+=============
 
-Trying to keep these more or less in order of priority.
+* Current by-topic docs don't show return values correctly.  They all
+  have "Returns ." in them.  See the documentation/product/*.xml
+  files.
 
-+ Take new wiki live.  Need to figure out exactly what still needs to
+* New, more compact formatting (CSS?) for documentation. 
+
+
+Web
+===
+
+* Take new wiki live.  Need to figure out exactly what still needs to
   be done.
 
-+ Single file libraries, for scripting.  See the discussion here
+* Get opendylan.org integrated with the wiki.  (Not clear how this
+  relates to dylan-lang.org, if at all.)
+
+* Convert opendylan.org to newer skin and generally spruce it up.
+
+
+Usability
+=========
+
+* Single file libraries, for scripting.  See the discussion here
   http://people.csail.mit.edu/gregs/info-dylan-archive-html-2001/msg00698.html
   My simple hack was going to be to allow Module: foo <<< EOM define
   lib and mod here EOM
+
+* Make Debian packages available via a simple "aptitude install
+  gwydion-dylan" etc.
 
 
 Reading List 
 ============
 
-+ Scala collections API (Bruce Mitchener recommendation)
+* Scala collections API (Bruce Mitchener recommendation)
 
 
 Dylan Language
 ==============
 
-+ It appears that if you define a sideways method (e.g., as(<string>, <character>))
+* It appears that if you define a sideways method (e.g., as(<string>, <character>))
   there is no way to avoid importing the definition if you use the library (note:
   not the module) that defines it?  I tried not using string-conversions, which
   defines it.  Is this an Open Dylan bug?
 
-+ What's the reasoning behind not having format-string and format-arguments
+* What's the reasoning behind not having format-string and format-arguments
   slots in <error>, but rather putting them in <simple-error>?  This is a wart
   on the language.  (And why not just make it error-message instead of two
   separate slots?  You probably don't want to risk caching the format arguments
@@ -46,21 +66,14 @@ Dylan Language
   import format-to-string?  Or to prevent having to do the formatting unless the
   error is actually signalled?)
 
-+ How do you create Unicode string constants if they only contain characters
+* How do you create Unicode string constants if they only contain characters
   that can be expressed in a <byte-string>?  e.g., in Python u"foo".  Does
   "\<60>" create a unicode string or a byte string?  Is this even useful?  How
   about #u"..."?
 
-+ For writing code with a lot of regular expressions in it, Python's r"..."
+* For writing code with a lot of regular expressions in it, Python's r"..."
   syntax is very nice.  What about adding something similar to Dylan?  e.g.,
   #r"...".
-
-
-Gwydion
-=======
-
-format-out("%f", 1.0) core dumps in 2.4.  Same for %g.
-This makes it difficult to do some of the shootout programs.
 
 
 Open Dylan
@@ -76,7 +89,7 @@ Linux and Windows.
 Windows
 ~~~~~~~
 
-+ I love using registry projects because they seem to be much less
+* I love using registry projects because they seem to be much less
   broken than non-registry projects and they allow for easily hacking
   on OD itself.  The major drawback for me is that they don't seem to
   support loose/development mode very well.  (Do some experiments to
@@ -89,17 +102,69 @@ Windows
 Linux
 ~~~~~
 
-+ All warnings should be displayed during compilation, even those of
+* All warnings should be displayed during compilation, even those of
   sub-projects.  I don't care if this is done in the compiler or if
   we provide a script that will display them.  (It would have to be
   a bit smart about which sub-projects were actually used, I guess.)
   This works in the IDE so I would imagine it's not a deep problem.
 
-+ It should be possible to get a Dylan-level backtrace.  I'm not
+* It should be possible to get a Dylan-level backtrace.  I'm not
   talking about interactive debugging here, just the ability to
   display a readable backtrace when an error is signalled.  e.g.,
   Python's default behavior is to display a backtrace before it
   exits if there's an unhandled exception.
+
+IDE
+---
+
+* Increase the initial size of windows to reflect today's minimum
+  screen sizes.
+
+* Move the Debug options to a top-level tab in the Project window.  I
+  change these all the time when testing.
+
+* Make it possible to sort definitions by right-clicking on a file in
+  the Project window.
+
+* Improvements to the "select buffers" menu: 
+
+    . Sort by most-recently-visited.  There should be a drop-down menu
+    to choose sorting method.  The choice should be remembered.
+
+    . Show which buffers are modified. 
+
+    . Show/hide which buffers were loaded due to Edit Methods?  Or
+      buffers which are under the project's directory (as determined
+      by the shared file root)?  Or just an option to show those that
+      are part of any open project?  Or add a filter widget...this
+      might be the most general.
+
+    . An option to display as «dir»/«file» rather than «file» «dir» 
+
+* Make M-. work for "m(t1, t2, t3, ...)" 
+
+* Integrate Testworks into the IDE.  Needs design.  10 seconds thought
+  ideas:
+
+    . Add a test-library keyword to the LID file. 
+
+    . Project -» Run Test Suite...  (use good default locations for tests) 
+
+    . Store test results in standard locations. 
+
+    . Display results in a new project window tab and have a button to
+      "make them canonical".
+
+    . Select arbirtrary tests and/or suites to re-run. 
+
+    . I really, really want hierarchical suite and test names for this. 
+
+    . Needs to support external resources, e.g., servers.  This can be
+      done via a --config argument.
+
+    . Integrate with the Test Specification to indicate in Deuce
+      whether the visible methods have corresponding tests, and if so,
+      what they are.
 
 
 Libraries
@@ -108,9 +173,10 @@ Libraries
 testworks
 ---------
 
-+ my-test-suite-app --list-tests and/or --list-suites and/or --list-all  
+* https://www.opendylan.org/cgi-bin/bugzilla/show_bug.cgi?id=7472
+  is my laundry list of testworks to-do items.
 
-+ [Not really testworks, but...]
+* [Not really testworks, but...]
   Export Test Suite Skeleton can generate invalid module specs.  The one it generated
   for regular-expressions had a bad ')' in  ::
 
@@ -120,31 +186,19 @@ testworks
 
       defne constant <invalid-regex> = <illegal-regex>;
       
+* Write a new unit test module that has a lot of the feature of
+  pyunit, nose, py.test, twisted.trial, etc., and none of the suck of
+  testworks.  It should have some sort of plug-in architecture for
+
+  adding features that are available on the command-line.
 
 common-dylan
 ------------
 
-+ Has float-to-string but no string-to-float.
+* Has float-to-string but no string-to-float.
   Has number-to-string but no string-to-number.
 
-+ Add key-exists? or has-key? g.f.?
-  There is key-exists? in gwydion/common/collection-extensions/collection-utils.dylan
-  but it's broken.  A fixed version would be::
-
-    define method key-exists?
-        (collection :: <collection>, key)
-     => (key-exists? :: <boolean>, value :: <object>);
-      let result = element(collection, key, default: $not-found);
-      if (result == $not-found)
-        values(#f, #f);
-      else
-        values(#t, result);
-      end if;
-    end method key-exists?;
-
-  but for some reason I get "Authorization denied" when I try to commit it.
-
-+ What's the reasoning behind the 'skip' parameter to some sequence functions,
+* What's the reasoning behind the 'skip' parameter to some sequence functions,
   like 'position'?  It seems like it would be less efficient to use than
   'start' and 'end' parameters since the implementation would have to start
   from the beginning each time.  I don't like it being a mandatory keyword in
@@ -165,50 +219,41 @@ regular-expressions
   implement the verbose: and multi-line: parameters to compile-regex.
 
 
-Koala
+system
+------
+
+* Add a #"author-id" file property.  Besides being generally useful,
+  currently if there's an error resolving the author name we're left
+  with nothing at all.  Use this in Koala's directory listing.  Also,
+  document the new attribute and consider removing the file-properties
+  function.
+
+* Better temp file support
+
+* Export both OS-specific and generic modules.  The OS-specific
+  modules would use the OS-specific names.  e.g., getpid vs
+  current-process-id.  Then for calls that only exist on a certain
+  platform it will be natural to use the OS-specific name instead of
+  inventing a new one.  Also if you know your code only works on Linux
+  it's more natural to call getpid anyway.
+
+koala
 -----
 
-+ Should probably be using <internet-address>es instead of <string>s, at least
+* Should probably be using <internet-address>es instead of <string>s, at least
   for the <listener> class.
 
-+ Interesting discussion about URL query values:
+* Interesting discussion about URL query values:
   http://lists.w3.org/Archives/Public/ietf-http-wg/2004JulSep/0009.html
 
-+ Hannes' comments re new config option to define-page et al...
-  http://ircbrowse.com/channel/dylan/20070220
-
-+ Look at the Allegro web app package more.  (name?)  It has some nice ideas
+* Look at the Allegro web app package more.  (name?)  It has some nice ideas
   about sessions and apps.
-
-+ define-responder takes an optional application: keyword argument, whos value
-  is a string::
-
-    define page table-page (<demo-page>)
-        (url: "/demo/table.dsp",
-         source: "demo/table.dsp")
-    end;
-
-  With the application: keyword argument the same thing happens, but the
-  responder may be moved to a specific vhost::
-
-    define page table-page (<demo-page>)
-        (application: "koala-demo",
-         url: "/demo/table.dsp",
-         source: "demo/table.dsp")
-    end;
-
-  servers per vm
-
-  types of web app:
-
-    - fully dynamic (no .dsp files, no config file)
-    - fully static (koala-app)
 
 
 locators
 --------
 
-+ Renamings::
+* Renamings::
 
     . <http-server> => <http-server-url>
     . <ftp-server> => <ftp-server-url>
@@ -218,26 +263,26 @@ locators
 String Hacking
 ==============
 
-+ Make "strings" library re-export most stuff from string-extensions and some
+* Make "strings" library re-export most stuff from string-extensions and some
   things from common-dylan.  Once it's in good shape, propose adding it to
   common-dylan.
 
-+ Various string conversion functions in common-dylan.
+* Various string conversion functions in common-dylan.
 
-+ I don't like the way the string-extensions library is broken up into modules.
+* I don't like the way the string-extensions library is broken up into modules.
   I don't see the need for more than one module there, and their names are odd.
   Could just add a string-extensions module that uses all the others and
   exports all.
 
-+ The OD and GD string-extensions libraries have diverged enough to be
+* The OD and GD string-extensions libraries have diverged enough to be
   disturbing.  Re-unify them?
 
-+ Would there be any name conflicts if common-dylan exported all the
+* Would there be any name conflicts if common-dylan exported all the
   string-extensions bindings?
 
-+ Write some tests for parse-[character-set-]description in string-hacking.dylan
+* Write some tests for parse-[character-set-]description in string-hacking.dylan
 
-+ Specific functions I've wanted::
+* Specific functions I've wanted::
 
     . slice(sequence, bpos, epos)
     . slice!(...)
@@ -246,82 +291,63 @@ String Hacking
     . ends-with?(suffix, string)    // ditto
 
 
-Libraries 
-Web Site 
-1. Get opendylan.org running on Koala.
+Project Ideas
+=============
 
-2. Convert opendylan.org to newer skin and generally spruce it up.
+* Convert lisppaste to Dylan with LTD.  This would be a good synthesis
+  project, like wiki is.
 
-Open Dylan IDE 
-To Do 
-   1. Reorganize this list into functional categories rather than size of effort. 
-   2. 
-   3. Improve the initial user experience: 
-      1. better packaging -- See comments from brc around 3/22/2010 on #dylan.  e.g., package the two compilers together so they don't need to make a choice.  Ubuntu/Debian packages. 
-      2. Improved README file included in package.  Should point to wiki docs (see next item). 
-      3. Improved wiki docs on getting started. 
-         * tutorial format? 
-         * cover everything that nickik encountered today (3/22/2010). 
-         * setting up env variables 
-         * creating registries 
-         * Explain the origins of the methodology (Windows) a bit? 
-   4. Add a #"author-id" file property.  Besides being generally useful, currently if there's an error resolving the author name we're left with nothing at all.  Use this in Koala's directory listing.  Also, document the new attribute and consider removing the file-properties function. 
-   5. Implement missing features: 
-      1. OS APIs 
-      2. temp files/dirs 
-   6. Convert lisppaste to Dylan with LTD.  This would be a good synthesis project, like wiki is.
+* Convert COIL to Dylan.  XML is just such a horrible configuration
+  syntax.
 
-   7. Convert COIL to Dylan.  XML is just such a horrible configuration syntax. 
-   8. Current by-topic docs don't show return values correctly.  They all have "Returns ." in them.  See the documentation/product/*.xml files. 
-   9. New, more compact formatting (CSS?) for documentation. 
+* Create a general-purpose "with" macro, analogous to Python's "with"
+  statement or C#'s "using" statement.  This could use a
+  «resource-protocol[-mixin]» class and support acquire and release
+  generic functions.  I counted around 300 "with"-style macros in
+  fundev and libraries, but of course only some of them would fit this
+  model.  The main ones that jump out at me are: network streams,
+  files, database connections, locks, http-server.  Housel mentioned
+  «closable-object» as one possibility, but it only supports close
+  currently, and the name isn't quite right.
 
-Ideas 
-Quick Hacks 
-      1. Create a general-purpose "with" macro, analogous to Python's "with" statement or C#'s "using" statement.  This could use a «resource-protocol[-mixin]» class and support acquire and release generic functions.  I counted around 300 "with"-style macros in fundev and libraries, but of course only some of them would fit this model.  The main ones that jump out at me are: network streams, files, database connections, locks, http-server.  Housel mentioned «closable-object» as one possibility, but it only supports close currently, and the name isn't quite right.
+* Implement enums a la Java:
+  http://download.oracle.com/javase/1.5.0/docs/guide/language/enums.html
+  It looks as though each element is an instance of the enum's class
+  name.  In Dylan there's no need to create a subclass for each
+  element when methods are provided, since we can use == method
+  dispatch on the enum constant.  The elements can be stored in class
+  slots.
 
-      2. Implement enums a la Java: http://download.oracle.com/javase/1.5.0/docs/guide/language/enums.html  It looks as though each element is an instance of the enum's class name.  In Dylan there's no need to create a subclass for each element when methods are provided, since we can use == method dispatch on the enum constant.  The elements can be stored in class slots. 
-      3. slice(sequence, bpos, epos), slice!(...), slice!-setter(...) 
+* Fix shootout code and update the web site. 
 
-Small Projects 
-         1. Write a new unit test module that has a lot of the feature of pyunit, nose, py.test, twisted.trial, etc., and none of the suck of testworks.  It should have some sort of plug-in architecture for adding features that are available on the command-line.
+* Benchmarks -- IO performance seems to be really bad.  See the
+  count-words benchmark.  Even some very basic benchmarks could
+  be useful at this stage...
 
-         2. Condition system improvements: 
-            1. Consider switching wholesale to current (Java?) terminology: condition -» exception, error -» bug 
-            2. Rename «serious-condition» to «exception».  Should «error» really be a subclass of «serious-condition»?  Fix system libraries' subclassing of «error» where inappropriate.  cpage's comments clarified things: 
-            3. Fix condition hierarchy around «invalid-index-error» and friends (see comment in collection.dylan) and export a useful set of conditions.  Needs to be shared with GD.  «key-error»? 
-         3. Fix "system" library to export both OS-specific and generic modules.  The OS-specific modules would use the OS-specific names.  e.g., getpid vs current-process-id.  Then for calls that only exist on a certain platform it will be natural to use the OS-specific name instead of inventing a new one.  Also if you know your code only works on Linux it's more natural to call getpid anyway.
+    . Array access speed for different array types.
+    . Gabriel benchmarks
+    . Allocation/deallocation
 
-         4. Fix shootout code for both GD and OD and update the web site. 
-         5. Benchmarks 
-         6. Make Debian packages available via a simple "aptitude install gwydion-dylan" etc. 
-         7. IDE improvements: 
-            1. Increase the initial size of windows to reflect today's minimum screen sizes. 
-            2. Move the Debug options to a top-level tab in the Project window.  I change these all the time when testing. 
-            3. Make it possible to sort definitions by right-clicking on a file in the Project window. 
-            4. Improvements to the "select buffers" menu: 
-               1. Sort by most-recently-visited.  There should be a drop-down menu to choose sorting method.  The choice should be remembered. 
-               2. Show which buffers are modified. 
-               3. Show/hide which buffers were loaded due to Edit Methods?  Or buffers which are under the project's directory (as determined by the shared file root)?  Or just an option to show those that are part of any open project?  Or add a filter widget...this might be the most general. 
-               4. An option to display as «dir»/«file» rather than «file» «dir» 
-            5. Make M-. work for "m(t1, t2, t3, ...)" 
-         8. Single file libraries, for scripting.  See the discussion here http://people.csail.mit.edu/gregs/info-dylan-archive-html-2001/msg00698.html .  My simple hack was going to be to allow Module: foo ««« EOM define lib and mod here EOM 
-         9. «ArmyOfBruce» cgay: Also, format in Dylan is i18n-lame.
+* DUIM on Linux
 
-Large Projects 
-            1. Integrate Testworks into the IDE.  Needs design.  10 seconds thought ideas: 
-               1. Add a test-library keyword to the LID file. 
-               2. Project -» Run Test Suite...  (use good default locations for tests) 
-               3. Store test results in standard locations. 
-               4. Display results in a new project window tab and have a button to "make them canonical". 
-               5. Select arbirtrary tests and/or suites to re-run. 
-               6. I really, really want hierarchical suite and test names for this. 
-               7. Needs to support external resources, e.g., servers.  This can be done via a --config argument. 
-               8. Integrate with the Test Specification to indicate in Deuce whether the visible methods have corresponding tests, and if so, what they are. 
-            2.  Write a better OpenAir.  :-)
 
-            3. DUIM on Linux 
-            4. Write a better UI to replace Synaptic on Debian.  This could be a way to get Dylan on a lot of machines. :) 
+Conditions
+==========
 
+* Consider switching wholesale to current (Java?) terminology:
+  condition -» exception, error -» bug
+
+* Rename «serious-condition» to «exception».  Should «error» really be
+  a subclass of «serious-condition»?  Fix system libraries'
+  subclassing of «error» where inappropriate.  cpage's comments
+  clarified things:
+
+* Fix condition hierarchy around «invalid-index-error» and friends
+  (see comment in collection.dylan) and export a useful set of
+  conditions.  Needs to be shared with GD.  «key-error»?
+
+
+-----------------------------------
 
 Proposal to rename «serious-condition» 
 
