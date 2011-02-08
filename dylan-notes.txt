@@ -50,6 +50,7 @@ Reading List
 ============
 
 * Scala collections API (Bruce Mitchener recommendation)
+* trunk/doc/opendylan design notes
 
 
 Dylan Language
