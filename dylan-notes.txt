@@ -38,7 +38,9 @@ Usability
 * Single file libraries, for scripting.  See the discussion here
   http://people.csail.mit.edu/gregs/info-dylan-archive-html-2001/msg00698.html
   My simple hack was going to be to allow Module: foo <<< EOM define
-  lib and mod here EOM
+  lib and mod here EOM.  Need to make sure this works::
+
+    #!/usr/local/bin/opendylan
 
 * Make Debian packages available via a simple "aptitude install
   gwydion-dylan" etc.
