@@ -56,18 +56,21 @@ Reading List
 Dylan Language
 ==============
 
-* It appears that if you define a sideways method (e.g., as(<string>, <character>))
-  there is no way to avoid importing the definition if you use the library (note:
-  not the module) that defines it?  I tried not using string-conversions, which
-  defines it.  Is this an Open Dylan bug?
+* What's the reasoning behind not having format-string and
+  format-arguments slots in <error>, but rather putting them in
+  <simple-error>?  This is a wart on the language.  You probably
+  don't want to risk the format arguments not having dynamic extent
+  anyway, most of the time.  (See comment in element-range-error.)  I
+  think it's an optimization to prevent having to do the formatting
+  unless the error is actually signalled.
 
-* What's the reasoning behind not having format-string and format-arguments
-  slots in <error>, but rather putting them in <simple-error>?  This is a wart
-  on the language.  (And why not just make it error-message instead of two
-  separate slots?  You probably don't want to risk caching the format arguments
-  anyway, most of the time.  [later] Is it to prevent everyone from having to
-  import format-to-string?  Or to prevent having to do the formatting unless the
-  error is actually signalled?)
+  Note that in many cases OD does embed collections into errors when
+  it doesn't use element-range-error.  This should be fixed and the
+  errors messages should at least include the collection type and
+  size.
+
+* Why is there no equivalent to Python's __repr__?  (See previous
+  item.)
 
 * How do you create Unicode string constants if they only contain characters
   that can be expressed in a <byte-string>?  e.g., in Python u"foo".  Does
@@ -76,7 +79,7 @@ Dylan Language
 
 * For writing code with a lot of regular expressions in it, Python's r"..."
   syntax is very nice.  What about adding something similar to Dylan?  e.g.,
-  #r"...".
+  #r"..." or #/.../
 
 
 Open Dylan
