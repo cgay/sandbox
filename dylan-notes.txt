@@ -145,7 +145,7 @@ IDE
       are part of any open project?  Or add a filter widget...this
       might be the most general.
 
-    . An option to display as «dir»/«file» rather than «file» «dir» 
+    . An option to display as <dir>/<file> rather than <file> <dir> 
 
 * Make M-. work for "m(t1, t2, t3, ...)" 
 
@@ -154,7 +154,7 @@ IDE
 
     . Add a test-library keyword to the LID file. 
 
-    . Project -» Run Test Suite...  (use good default locations for tests) 
+    . Project -> Run Test Suite...  (use good default locations for tests) 
 
     . Store test results in standard locations. 
 
@@ -308,12 +308,12 @@ Project Ideas
 
 * Create a general-purpose "with" macro, analogous to Python's "with"
   statement or C#'s "using" statement.  This could use a
-  «resource-protocol[-mixin]» class and support acquire and release
+  <resource-protocol[-mixin]> class and support acquire and release
   generic functions.  I counted around 300 "with"-style macros in
   fundev and libraries, but of course only some of them would fit this
   model.  The main ones that jump out at me are: network streams,
   files, database connections, locks, http-server.  Housel mentioned
-  «closable-object» as one possibility, but it only supports close
+  <closable-object> as one possibility, but it only supports close
   currently, and the name isn't quite right.
 
 * Implement enums a la Java:
@@ -341,32 +341,32 @@ Conditions
 ==========
 
 * Consider switching wholesale to current (Java?) terminology:
-  condition -» exception, error -» bug
+  condition -> exception, error -> bug
 
-* Rename «serious-condition» to «exception».  Should «error» really be
-  a subclass of «serious-condition»?  Fix system libraries'
-  subclassing of «error» where inappropriate.  cpage's comments
+* Rename <serious-condition> to <exception>.  Should <error> really be
+  a subclass of <serious-condition>?  Fix system libraries'
+  subclassing of <error> where inappropriate.  cpage's comments
   clarified things:
 
-* Fix condition hierarchy around «invalid-index-error» and friends
+* Fix condition hierarchy around <invalid-index-error> and friends
   (see comment in collection.dylan) and export a useful set of
-  conditions.  Needs to be shared with GD.  «key-error»?
+  conditions.  Needs to be shared with GD.  <key-error>?
 
 
 -----------------------------------
 
-Proposal to rename «serious-condition» 
+Proposal to rename <serious-condition> 
 
-Proposal:  Change the language by renaming «serious-condition» to «exception». 
+Proposal:  Change the language by renaming <serious-condition> to <exception>. 
 
 Reasoning: 
 
 For reference, here are some DRM definitions: 
 
-«serious-condition»: The class of conditions that cannot be safely ignored. 
-«error»: The class of conditions that represent something invalid about the program. 
+<serious-condition>: The class of conditions that cannot be safely ignored. 
+<error>: The class of conditions that represent something invalid about the program. 
 
-(1) «serious-condition» is the normal class to inherit from for classes that represent exceptional conditions and that are not errors.  (Note the use of the word "exceptional" here, which seems natural in English.)  The name "«serious-condition»" is too wishy-washy and long-winded to be the default condition class to subclass or catch.  Chris Page also points out that it begs the question "How serious?"  Should we also have a «really-serious-condition»? 
+(1) <serious-condition> is the normal class to inherit from for classes that represent exceptional conditions and that are not errors.  (Note the use of the word "exceptional" here, which seems natural in English.)  The name "<serious-condition>" is too wishy-washy and long-winded to be the default condition class to subclass or catch.  Chris Page also points out that it begs the question "How serious?"  Should we also have a <really-serious-condition>? 
 
 (2) "Exception" is common terminology for this type of condition in other languages so this makes Dylan slightly more accessible to programmers coming from those communities. 
 
@@ -374,8 +374,8 @@ Implementation:
 
 This is a fairly straight-forward change.  The steps would be:
 
-(1) Rename «serious-condition» to «exception».
-(2) Update all uses of «serious-condition» to use «exception» instead.
+(1) Rename <serious-condition> to <exception>.
+(2) Update all uses of <serious-condition> to use <exception> instead.
 (3) Update the DRM with an erratum noting the change.
 (4) Profit.
 
@@ -384,12 +384,12 @@ I would prefer NOT to provide backward compatibility because the user base is ti
 Comments?
 
 
-Proposal to make «serious-condition» and «error» disjoint 
-Proposal: Make «error» be a subclass of «condition» instead of being a subclass of «serious-condition».
+Proposal to make <serious-condition> and <error> disjoint 
+Proposal: Make <error> be a subclass of <condition> instead of being a subclass of <serious-condition>.
 
 Reasoning:
 
-In many programs there are cases for which it is legitimate to use the "diaper pattern" (i.e., catch many or all exceptions).  For example in an application's top-level loop it may be preferable to catch «serious-condition» and offer the choice to continue rather than to exit the application.  Sometimes library code doesn't export a particular exception class so the client is left with no choice but to cast a wider net.
+In many programs there are cases for which it is legitimate to use the "diaper pattern" (i.e., catch many or all exceptions).  For example in an application's top-level loop it may be preferable to catch <serious-condition> and offer the choice to continue rather than to exit the application.  Sometimes library code doesn't export a particular exception class so the client is left with no choice but to cast a wider net.
 
 
 
