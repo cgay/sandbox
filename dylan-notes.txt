@@ -129,7 +129,29 @@ IDE
 * Move the Debug options to a top-level tab in the Project window.  I
   change these all the time when testing.
 
-* Make it possible to sort definitions by right-clicking on a file in
+* Change win32-environment command-line parsing to use
+  commmand-line-parser.
+
+* Use config file instead of registry on Windows.  Housel says it
+  would be nice if it were pluggable so that you could use either one.
+  Just configs would be enough for me, but since registry is already
+  used it probably makes sense to be Windowsy on Windows.  Config files
+  could be used for testing on Windows.
+
+  I imagine adding a --config command-line option would be enough to
+  switch to the use of config files and ignore the registry.  This
+  would especially be useful for testing.
+
+  There would need to be a user config file (default
+  ~/.opendylan/opendylan.coil) and an auto-generated config for
+  settings that are changed via the IDE (e.g., ~/.opendylan/autogen.coil).
+  The user file would override options in the autogen file.
+
+  It would be nice to allow "--config none" to mean "don't load any
+  config".
+
+* Make it possible to sort the tree of definitions (alphabetically, by
+  definition type, by textual order) by right-clicking on a file in
   the Project window.
 
 * Improvements to the "select buffers" menu: 
