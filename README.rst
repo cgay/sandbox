@@ -413,8 +413,10 @@ Project Ideas
 * Convert lisppaste to Dylan with LTD.  This would be a good synthesis
   project, like wiki is.
 
-* Convert COIL to Dylan.  XML is just such a horrible configuration
-  syntax.
+* Convert COIL to Dylan.  XML is just such a horrible configuration syntax.
+
+  This is underway in https://github.com/cgay/coil .  Parser is basically
+  working.  Needs tests and printer.
 
 * Create a general-purpose "with" macro, analogous to Python's "with"
   statement or C#'s "using" statement.  This could use a
