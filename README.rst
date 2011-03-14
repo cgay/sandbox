@@ -6,7 +6,8 @@ are below...
 
 .. contents::
 
-.. Admin
+.. Current Priorities
+   Admin
    Documentation
    Web
    Usability
@@ -29,6 +30,18 @@ are below...
    Project Ideas
    Conditions
 
+
+Current Priorities
+==================
+
+(1) Finish wiki and take it live, replacing old wiki.  Adding a git
+    back-end for storing the data since dood doesn't scale well and
+    is difficult to change.
+
+(#) Finish migrating svn to git.  There are some rarely-used repos
+    that I haven't converted yet.
+
+(#) Put archive/ under MIT license.
 
 
 Admin 
