@@ -102,14 +102,14 @@ Dylan Language
 * Why is there no equivalent to Python's __repr__?  (See previous
   item.)
 
-* How do you create Unicode string constants if they only contain characters
-  that can be expressed in a <byte-string>?  e.g., in Python u"foo".  Does
-  "\<60>" create a unicode string or a byte string?  Is this even useful?  How
-  about #u"..."?
+* How do you create Unicode string constants if they only contain
+  characters that can be expressed in a <byte-string>?  e.g., in
+  Python u"foo".  Does "\<666>" create a unicode string or a byte
+  string?  Is this even useful?  How about #u"..."?
 
-* For writing code with a lot of regular expressions in it, Python's r"..."
-  syntax is very nice.  What about adding something similar to Dylan?  e.g.,
-  #r"..." or #/.../
+* For writing code with regular expressions in it, Python's r"..."
+  syntax is very nice.  What about adding something similar to Dylan?
+  e.g., #r"..." or #/.../
 
 
 Open Dylan
@@ -186,16 +186,16 @@ IDE
 
 * Improvements to the "select buffers" menu: 
 
-    . Sort by most-recently-visited.  There should be a drop-down menu
+    + Sort by most-recently-visited.  There should be a drop-down menu
       to choose sorting method.  The choice should be remembered.
 
-    . Show/hide which buffers were loaded due to Edit Methods?  Or
+    + Show/hide which buffers were loaded due to Edit Methods?  Or
       buffers which are under the project's directory (as determined
       by the shared file root)?  Or just an option to show those that
       are part of any open project?  Or add a filter widget...this
       might be the most general.
 
-    . An option to display as <dir>/<file> rather than <file> <dir>.
+    + An option to display as <dir>/<file> rather than <file> <dir>.
       This can make it easier to find files if you know the directory.
       They just line up better.  Could play around with showing only
       the unique parts, or grouping them by directory...
@@ -209,23 +209,23 @@ IDE
 * Integrate Testworks into the IDE.  Needs design.  10 seconds thought
   ideas:
 
-    . Add a test-library keyword to the LID file. 
+    + Add a test-library keyword to the LID file. 
 
-    . Project -> Run Test Suite...  (use good default locations for tests) 
+    + Project -> Run Test Suite...  (use good default locations for tests) 
 
-    . Store test results in standard locations. 
+    + Store test results in standard locations. 
 
-    . Display results in a new project window tab and have a button to
+    + Display results in a new project window tab and have a button to
       "make them canonical".
 
-    . Select arbirtrary tests and/or suites to re-run. 
+    + Select arbirtrary tests and/or suites to re-run. 
 
-    . I really, really want hierarchical suite and test names for this. 
+    + I really, really want hierarchical suite and test names for this. 
 
-    . Needs to support external resources, e.g., servers.  This can be
+    + Needs to support external resources, e.g., servers.  This can be
       done via a --config argument.
 
-    . Integrate with the Test Specification to indicate in Deuce
+    + Integrate with the Test Specification to indicate in Deuce
       whether the visible methods have corresponding tests, and if so,
       what they are.
 
@@ -356,11 +356,11 @@ koala
 locators
 --------
 
-* Renamings::
+* Renamings:
 
-    . <http-server> => <http-server-url>
-    . <ftp-server> => <ftp-server-url>
-    . <file-server> => <file-server-url>
+    + <http-server> => <http-server-url>
+    + <ftp-server> => <ftp-server-url>
+    + <file-server> => <file-server-url>
 
 
 String Hacking
@@ -427,9 +427,9 @@ Project Ideas
   count-words benchmark.  Even some very basic benchmarks could
   be useful at this stage...
 
-    . Array access speed for different array types.
-    . Gabriel benchmarks
-    . Allocation/deallocation
+    + Array access speed for different array types.
+    + Gabriel benchmarks
+    + Allocation/deallocation
 
 * DUIM on Linux
 
