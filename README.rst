@@ -6,6 +6,28 @@ are below...
 
 .. contents::
 
+.. Admin
+   Documentation
+   Web
+   Usability
+   Reading List
+   Dylan Language
+   Open Dylan
+     What defines a 1.0 release?
+       Windows
+       Linux
+     IDE
+   Libraries
+     testworks
+     common-dylan
+     collections
+     regular-expressions
+     system
+     koala
+     locators
+   String Hacking
+   Project Ideas
+   Conditions
 
 
 
@@ -165,9 +187,7 @@ IDE
 * Improvements to the "select buffers" menu: 
 
     . Sort by most-recently-visited.  There should be a drop-down menu
-    to choose sorting method.  The choice should be remembered.
-
-    . Show which buffers are modified. 
+      to choose sorting method.  The choice should be remembered.
 
     . Show/hide which buffers were loaded due to Edit Methods?  Or
       buffers which are under the project's directory (as determined
@@ -175,9 +195,16 @@ IDE
       are part of any open project?  Or add a filter widget...this
       might be the most general.
 
-    . An option to display as <dir>/<file> rather than <file> <dir> 
+    . An option to display as <dir>/<file> rather than <file> <dir>.
+      This can make it easier to find files if you know the directory.
+      They just line up better.  Could play around with showing only
+      the unique parts, or grouping them by directory...
 
-* Make M-. work for "m(t1, t2, t3, ...)" 
+* Show the filename in separator lines in composite buffers.
+
+* Make M-. work for "m(t1, t2, t3, ...)"  Even better, if it's not too
+  slow, right click on a name could put all known methods under a
+  submenu of Edit Methods, plus All.
 
 * Integrate Testworks into the IDE.  Needs design.  10 seconds thought
   ideas:
@@ -202,6 +229,33 @@ IDE
       whether the visible methods have corresponding tests, and if so,
       what they are.
 
+* Implement fast, Eclipse-style "resource search".  This would use the
+  compiler database, not be file search.  (Although file search could
+  be integrated into it as well, as in Eclipse.)  It could offer to
+  put all the found definitions into a composite buffer.
+
+* Modernize the VCS integration.  As a first pass support Subversion
+  and Git.  The way it's currently done looks a bit antiquated to me
+  although I haven't fully internalized it yet.
+
+  + There should be auto-detection of the VCS back-end based on
+    existence of .git or .svn directories.
+
+  + The Project Window should show the VC status of files and should
+    provide a way to commit/update/etc the entire project or selected
+    files.
+
+  + The Editor Window should show the revision number and status of
+    the current file, and should have options to commit/update/diff/etc.
+
+  + Give some thought to how we might support VC operations for
+    multiple open project (via the Main Window?)
+
+  + Provide some way to collect up commit comments incrementally (from
+    the editor, diff/merge facility, and of course from the commit UI).
+
+  + Provide integration with diff/merge tools like Meld rather than
+    reinventing the wheel.
 
 Libraries
 =========
@@ -246,6 +300,19 @@ common-dylan
 
   find-key has a 'failure' keyword argument which it seems should be
   called 'default' or at least 'on-failure'.
+
+
+collections
+-----------
+
+* Move <set> into the collections library.  It's Currently defined in
+  functional-extensions, so that's where you find it with a 'grep' and
+  that's not a library you want to use directly since it's not
+  portable.
+
+  housel suggests that we could combine collection-extensions into
+  collections, since collections is standard/"common dylan" while
+  collection-extensions started as a GD-only library.
 
 
 regular-expressions
