@@ -38,9 +38,6 @@ Current Priorities
     back-end for storing the data since dood doesn't scale well and
     is difficult to change.
 
-(#) Finish migrating svn to git.  There are some rarely-used repos
-    that I haven't converted yet.
-
 (#) Put archive/ under MIT license.
 
 
@@ -171,6 +168,12 @@ IDE
 
 * Move the Debug options to a top-level tab in the Project window.  I
   change these all the time when testing.
+
+* Combine the Build dialog and Warnings tab into a single tab called
+  Build.  They seem a natural fit and the larger screens these days
+  can easily accomodate the change.  Note that the two lines of text
+  in the current Build progress window can easily be combined into
+  one: <library-name>: <action>
 
 * Change win32-environment command-line parsing to use
   commmand-line-parser.
@@ -353,6 +356,20 @@ system
   inventing a new one.  Also if you know your code only works on Linux
   it's more natural to call getpid anyway.
 
+* run-application
+
+  + When the exe file doesn't exist, the error is "create process
+    failed: The system cannot find the file specified."  It should say
+    what the file was.
+
+  + I would like a simpler API than this.  The irregular number of
+    return values is strange, and often one wants something as simple
+    as::
+
+      let (exit-code, stdout, stderr) = run-program("whoami");
+
+    As for a complete API, I like the way subprocess.Popen works.
+
 koala
 -----
 
@@ -366,8 +383,29 @@ koala
   about sessions and apps.
 
 
+file-system
+-----------
+
+* create-directory(parent, name) seriously?  Just pass a single pathname and
+  figure out the parent directory, yes?
+
+
 locators
 --------
+
+* Rewrite the whole damned thing?  Man, I hate this library.  It seems
+  way overly complex to me.  Need to come up with a reasonable
+  alternate design, I guess.  I would probably get rid of directory
+  locators completely, since you generally don't know whether a
+  locator names a directory or file until you ask the file-system.  It
+  has to be sufficiently easy to use with strings wherever possible,
+  rather than (for example) having to create useless locator objects
+  just to merge them.  I think you basically need::
+
+    <locator>
+      <url>
+      <file>
+      
 
 * Renamings:
 
@@ -409,6 +447,23 @@ String Hacking
 
 Project Ideas
 =============
+
+* It might be fun to try something like this for Dylan:
+  http://dev-tricks.net/pipe-infix-syntax-for-python
+  I imagine syntax like::
+
+    pipe(fib() => until(f1) => where(f2) => transform(f3) => sum)
+
+  Instead of iterators we would use closures in Dylan, so fib()
+  returns a "generator": a closure taking no args and returning the
+  next value each time it is called.  Each name following the =>, such
+  as "until", would be a function that expects a generator function as
+  its first argument and returns the next value according to its own
+  rules.
+
+  I have my doubts about the general applicability of this, but it
+  might be a neat hack and possibly a blog post.  dlowe brought it to
+  my attention.
 
 * Convert lisppaste to Dylan with LTD.  This would be a good synthesis
   project, like wiki is.
