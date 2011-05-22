@@ -6,7 +6,39 @@ are below...
 
 .. contents::
 
+.. Current Priorities
+   Admin
+   Documentation
+   Web
+   Usability
+   Reading List
+   Dylan Language
+   Open Dylan
+     What defines a 1.0 release?
+       Windows
+       Linux
+     IDE
+   Libraries
+     testworks
+     common-dylan
+     collections
+     regular-expressions
+     system
+     koala
+     locators
+   String Hacking
+   Project Ideas
+   Conditions
 
+
+Current Priorities
+==================
+
+(1) Finish wiki and take it live, replacing old wiki.  Adding a git
+    back-end for storing the data since dood doesn't scale well and
+    is difficult to change.
+
+(#) Put archive/ under MIT license.
 
 
 Admin 
@@ -80,14 +112,14 @@ Dylan Language
 * Why is there no equivalent to Python's __repr__?  (See previous
   item.)
 
-* How do you create Unicode string constants if they only contain characters
-  that can be expressed in a <byte-string>?  e.g., in Python u"foo".  Does
-  "\<60>" create a unicode string or a byte string?  Is this even useful?  How
-  about #u"..."?
+* How do you create Unicode string constants if they only contain
+  characters that can be expressed in a <byte-string>?  e.g., in
+  Python u"foo".  Does "\<666>" create a unicode string or a byte
+  string?  Is this even useful?  How about #u"..."?
 
-* For writing code with a lot of regular expressions in it, Python's r"..."
-  syntax is very nice.  What about adding something similar to Dylan?  e.g.,
-  #r"..." or #/.../
+* For writing code with regular expressions in it, Python's r"..."
+  syntax is very nice.  What about adding something similar to Dylan?
+  e.g., #r"..." or #/.../
 
 
 Open Dylan
@@ -137,6 +169,12 @@ IDE
 * Move the Debug options to a top-level tab in the Project window.  I
   change these all the time when testing.
 
+* Combine the Build dialog and Warnings tab into a single tab called
+  Build.  They seem a natural fit and the larger screens these days
+  can easily accomodate the change.  Note that the two lines of text
+  in the current Build progress window can easily be combined into
+  one: <library-name>: <action>
+
 * Change win32-environment command-line parsing to use
   commmand-line-parser.
 
@@ -164,44 +202,76 @@ IDE
 
 * Improvements to the "select buffers" menu: 
 
-    . Sort by most-recently-visited.  There should be a drop-down menu
-    to choose sorting method.  The choice should be remembered.
+    + Sort by most-recently-visited.  There should be a drop-down menu
+      to choose sorting method.  The choice should be remembered.
 
-    . Show which buffers are modified. 
-
-    . Show/hide which buffers were loaded due to Edit Methods?  Or
+    + Show/hide which buffers were loaded due to Edit Methods?  Or
       buffers which are under the project's directory (as determined
       by the shared file root)?  Or just an option to show those that
       are part of any open project?  Or add a filter widget...this
       might be the most general.
 
-    . An option to display as <dir>/<file> rather than <file> <dir> 
+    + An option to display as <dir>/<file> rather than <file> <dir>.
+      This can make it easier to find files if you know the directory.
+      They just line up better.  Could play around with showing only
+      the unique parts, or grouping them by directory...
 
-* Make M-. work for "m(t1, t2, t3, ...)" 
+* Show the filename in separator lines in composite buffers.
+
+* Make M-. work for "m(t1, t2, t3, ...)"  Even better, if it's not too
+  slow, right click on a name could put all known methods under a
+  submenu of Edit Methods, plus All.
 
 * Integrate Testworks into the IDE.  Needs design.  10 seconds thought
   ideas:
 
-    . Add a test-library keyword to the LID file. 
+    + Add a test-library keyword to the LID file. 
 
-    . Project -> Run Test Suite...  (use good default locations for tests) 
+    + Project -> Run Test Suite...  (use good default locations for tests) 
 
-    . Store test results in standard locations. 
+    + Store test results in standard locations. 
 
-    . Display results in a new project window tab and have a button to
+    + Display results in a new project window tab and have a button to
       "make them canonical".
 
-    . Select arbirtrary tests and/or suites to re-run. 
+    + Select arbirtrary tests and/or suites to re-run. 
 
-    . I really, really want hierarchical suite and test names for this. 
+    + I really, really want hierarchical suite and test names for this. 
 
-    . Needs to support external resources, e.g., servers.  This can be
+    + Needs to support external resources, e.g., servers.  This can be
       done via a --config argument.
 
-    . Integrate with the Test Specification to indicate in Deuce
+    + Integrate with the Test Specification to indicate in Deuce
       whether the visible methods have corresponding tests, and if so,
       what they are.
 
+* Implement fast, Eclipse-style "resource search".  This would use the
+  compiler database, not be file search.  (Although file search could
+  be integrated into it as well, as in Eclipse.)  It could offer to
+  put all the found definitions into a composite buffer.
+
+* Modernize the VCS integration.  As a first pass support Subversion
+  and Git.  The way it's currently done looks a bit antiquated to me
+  although I haven't fully internalized it yet.
+
+  + There should be auto-detection of the VCS back-end based on
+    existence of .git or .svn directories.
+
+  + The Project Window should show the VC status of files and should
+    provide a way to commit/update/etc the entire project or selected
+    files.
+
+  + The Editor Window should show the revision number and status of
+    the current file, and should have options to commit/update/diff/etc.
+
+  + Give some thought to how we might support VC operations for
+    multiple open project (via the Main Window?)
+
+  + Provide some way to collect up commit comments incrementally (from
+    the editor, diff/merge facility, and of course from the commit UI).
+
+  + Provide integration with diff/merge tools like Meld rather than
+    reinventing the wheel.
 
 Libraries
 =========
@@ -248,6 +318,19 @@ common-dylan
   called 'default' or at least 'on-failure'.
 
 
+collections
+-----------
+
+* Move <set> into the collections library.  It's Currently defined in
+  functional-extensions, so that's where you find it with a 'grep' and
+  that's not a library you want to use directly since it's not
+  portable.
+
+  housel suggests that we could combine collection-extensions into
+  collections, since collections is standard/"common dylan" while
+  collection-extensions started as a GD-only library.
+
+
 regular-expressions
 -------------------
 
@@ -273,6 +356,20 @@ system
   inventing a new one.  Also if you know your code only works on Linux
   it's more natural to call getpid anyway.
 
+* run-application
+
+  + When the exe file doesn't exist, the error is "create process
+    failed: The system cannot find the file specified."  It should say
+    what the file was.
+
+  + I would like a simpler API than this.  The irregular number of
+    return values is strange, and often one wants something as simple
+    as::
+
+      let (exit-code, stdout, stderr) = run-program("whoami");
+
+    As for a complete API, I like the way subprocess.Popen works.
+
 koala
 -----
 
@@ -286,14 +383,35 @@ koala
   about sessions and apps.
 
 
+file-system
+-----------
+
+* create-directory(parent, name) seriously?  Just pass a single pathname and
+  figure out the parent directory, yes?
+
+
 locators
 --------
 
-* Renamings::
+* Rewrite the whole damned thing?  Man, I hate this library.  It seems
+  way overly complex to me.  Need to come up with a reasonable
+  alternate design, I guess.  I would probably get rid of directory
+  locators completely, since you generally don't know whether a
+  locator names a directory or file until you ask the file-system.  It
+  has to be sufficiently easy to use with strings wherever possible,
+  rather than (for example) having to create useless locator objects
+  just to merge them.  I think you basically need::
 
-    . <http-server> => <http-server-url>
-    . <ftp-server> => <ftp-server-url>
-    . <file-server> => <file-server-url>
+    <locator>
+      <url>
+      <file>
+      
+
+* Renamings:
+
+    + <http-server> => <http-server-url>
+    + <ftp-server> => <ftp-server-url>
+    + <file-server> => <file-server-url>
 
 
 String Hacking
@@ -330,11 +448,30 @@ String Hacking
 Project Ideas
 =============
 
+* It might be fun to try something like this for Dylan:
+  http://dev-tricks.net/pipe-infix-syntax-for-python
+  I imagine syntax like::
+
+    pipe(fib() => until(f1) => where(f2) => transform(f3) => sum)
+
+  Instead of iterators we would use closures in Dylan, so fib()
+  returns a "generator": a closure taking no args and returning the
+  next value each time it is called.  Each name following the =>, such
+  as "until", would be a function that expects a generator function as
+  its first argument and returns the next value according to its own
+  rules.
+
+  I have my doubts about the general applicability of this, but it
+  might be a neat hack and possibly a blog post.  dlowe brought it to
+  my attention.
+
 * Convert lisppaste to Dylan with LTD.  This would be a good synthesis
   project, like wiki is.
 
-* Convert COIL to Dylan.  XML is just such a horrible configuration
-  syntax.
+* Convert COIL to Dylan.  XML is just such a horrible configuration syntax.
+
+  This is underway in https://github.com/cgay/coil .  Parser is basically
+  working.  Needs tests and printer.
 
 * Create a general-purpose "with" macro, analogous to Python's "with"
   statement or C#'s "using" statement.  This could use a
@@ -360,9 +497,9 @@ Project Ideas
   count-words benchmark.  Even some very basic benchmarks could
   be useful at this stage...
 
-    . Array access speed for different array types.
-    . Gabriel benchmarks
-    . Allocation/deallocation
+    + Array access speed for different array types.
+    + Gabriel benchmarks
+    + Allocation/deallocation
 
 * DUIM on Linux
 
