@@ -38,6 +38,8 @@ Current Priorities
     back-end for storing the data since dood doesn't scale well and
     is difficult to change.
 
+(#) Finish coil library (and possibly fork it to make a json parser)
+
 (#) Put archive/ under MIT license.
 
 
