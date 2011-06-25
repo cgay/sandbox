@@ -448,6 +448,8 @@ String Hacking
 Project Ideas
 =============
 
+* Get lisp-to-dylan (LTD) added to quicklisp.
+
 * It might be fun to try something like this for Dylan:
   http://dev-tricks.net/pipe-infix-syntax-for-python
   I imagine syntax like::
@@ -464,6 +466,10 @@ Project Ideas
   I have my doubts about the general applicability of this, but it
   might be a neat hack and possibly a blog post.  dlowe brought it to
   my attention.
+
+* english2cron: parse english and generate cron time specs.  Could be
+  a Python hack to actually have anyone give a shit, and would make a
+  fun blog post. :)
 
 * Convert lisppaste to Dylan with LTD.  This would be a good synthesis
   project, like wiki is.
