@@ -59,19 +59,19 @@ Documentation
   have "Returns ." in them.  See the documentation/product/*.xml
   files.
 
-* New, more compact formatting (CSS?) for documentation. 
+* New, more compact formatting (CSS?) for documentation.
+
+* Revamp the FAQ.  It's so random and negative.  Look at eiffel.com FAQ
+  for examples.
 
 
 Web
 ===
 
-* Take new wiki live.  Need to figure out exactly what still needs to
-  be done.
-
-* Get opendylan.org integrated with the wiki.  (Not clear how this
-  relates to dylan-lang.org, if at all.)
-
-* Convert opendylan.org to newer skin and generally spruce it up.
+* Take new wiki live.  This should completely replace the static web
+  pages on opendylan.org.  We still need to access bugzilla and
+  possibly some other services.  What non-Dylan stuff is the Apache
+  instance used for?
 
 
 Usability

@@ -1,5 +1,4 @@
 anaphora
-authors
 base64
 collection-extensions
 command-line-parser
@@ -7,7 +6,6 @@ doctower
 dynamic-binding
 graph-viewer
 graphviz-renderer
-grit
 gui-testworks
 http
 inertia
@@ -20,7 +18,6 @@ peg-parser
 priority-queue
 registry
 regular-expressions
-sandbox
 sequence-stream
 skip-list
 slot-visitor
