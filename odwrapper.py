@@ -6,12 +6,15 @@ import subprocess
 import sys
 
 # TODO:
+# * Modify Open Dylan to do all this crap in the first place.
 # * Display full source path in warning.
-# * Add option for compiler name.
-# * Add option for verbosity, to display all compiler output.
-# * Add option to show dylan library warnings.  Don't by default.
-# * Make it process the compiler output incrementally.
-# * Modify Open Dylan to do this correctly.
+# * Add --compiler option, to specify the compiler to use.
+# * Add --serious option, to display only serious warnings.
+# * Add --verbose option.
+# * Add --dylan-library option to show dylan library warnings.
+# * Recognize and pass through OD command-line options.
+# * Process the compiler output incrementally, most likely by
+#   passing the opened file descriptor around and using readline.
 
 
 def main ():
