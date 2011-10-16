@@ -1,0 +1,30 @@
+{
+  "remotes": {
+        "origin": { "fetch": "git@github.com:dylan-lang/%(name)s.git" },
+        "mine": { "fetch": "git@github.com:cgay/%(name)s.git" }
+        },
+  "projects": {
+        "dylan-wiki-data": { "track-branch": "master", "remotes": ["mine"] },
+
+        "anaphora": { "track-branch": "master", "remotes": ["origin"] },
+        "base64": { "track-branch": "master", "remotes": ["origin"] },
+        "collection-extensions": { "track-branch": "master", "remotes": ["origin"] },
+        "command-line-parser": { "track-branch": "master", "remotes": ["origin"] },
+        "graphviz-renderer": { "track-branch": "master", "remotes": ["origin"] },
+        "http": { "track-branch": "master", "remotes": ["origin"] },
+        "logging": { "track-branch": "master", "remotes": ["origin"] },
+        "meta": { "track-branch": "master", "remotes": ["origin"] },
+        "mime": { "track-branch": "master", "remotes": ["origin"] },
+        "opendylan": { "track-branch": "master", "remotes": ["origin"] },
+        "opendylan.org": { "track-branch": "master", "remotes": ["origin"] },
+        "registry": { "track-branch": "master", "remotes": ["origin"] },
+        "regular-expressions": { "track-branch": "master", "remotes": ["origin"] },
+        "strings": { "track-branch": "master", "remotes": ["origin"] },
+        "uncommon-dylan": { "track-branch": "master", "remotes": ["origin"] },
+        "uri": { "track-branch": "master", "remotes": ["origin"] },
+        "web-framework": { "track-branch": "master", "remotes": ["origin"] },
+        "wiki": { "track-branch": "master", "remotes": ["origin"] },
+        "xml-parser": { "track-branch": "master", "remotes": ["origin"] },
+        "xml-rpc": { "track-branch": "master", "remotes": ["origin"] }
+        }
+  }
