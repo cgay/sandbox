@@ -42,6 +42,15 @@ Current Priorities
 
 (#) Put archive/ under MIT license.
 
+(#) Talk to Andrew Shalit about legal status of the DRM.
+
+(#) Fix the testing situation.  There should be a test suite for every
+    library.  All test suites should use the "lib or exe" hack.  It
+    should be trivial for anyone to run the tests and compare with
+    previous results.  Tests should be run automatically after each
+    push.  There should be a web page showing historical results.
+    
+
 
 Admin 
 =====
