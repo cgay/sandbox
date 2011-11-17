@@ -9,7 +9,6 @@
 
         "anaphora": { "track-branch": "master", "remotes": ["origin"] },
         "base64": { "track-branch": "master", "remotes": ["origin"] },
-        "books": { "track-branch": "master", "remotes": ["origin"] },
         "collection-extensions": { "track-branch": "master", "remotes": ["origin"] },
         "command-line-parser": { "track-branch": "master", "remotes": ["origin"] },
         "doctower": { "track-branch": "master", "remotes": ["origin"] },
@@ -34,7 +33,6 @@
         "sequence-stream": { "track-branch": "master", "remotes": ["origin"] },
         "skip-list": { "track-branch": "master", "remotes": ["origin"] },
         "slot-visitor": { "track-branch": "master", "remotes": ["origin"] },
-        "state-machine": { "track-branch": "master", "remotes": ["origin"] },
         "strings": { "track-branch": "master", "remotes": ["origin"] },
         "template-engine": { "track-branch": "master", "remotes": ["origin"] },
         "testworks": { "track-branch": "master", "remotes": ["origin"] },
