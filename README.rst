@@ -320,17 +320,28 @@ common-dylan
   'start' and 'end' parameters since the implementation would have to start
   from the beginning each time.  I don't like it being a mandatory keyword in
   the 'position' generic function.  (Other functions that have it:
-  find-element, find-value, find-key.)
+  find-element, find-value, find-key.)  Note that find-key(..., skip: ...)
+  is only used twice is all of Open Dylan.
 
   subsequence-position uses 'count', but it really means 'skip'.  Need to do
   an exhaustive review of all the sequence functions.
 
-  find-key has a 'failure' keyword argument which it seems should be
-  called 'default' or at least 'on-failure'.
+* find-key has a 'failure' keyword argument which it seems should be
+  called 'default' or at least 'on-failure'.  Want::
 
-  Review other collection functions that might use start/end parameters.
-  They could be usefully added to find-key without conflicting with the
-  current contract.
+    find-key(seq, fn, start: m, end: n, default: d)
+
+* Review other collection functions that might use start/end parameters.
+
+* Look at Factor as an example:
+  http://docs.factorcode.org/content/article-sequences.html
+
+* abeaumont points out that it can be more readable to use sequence
+  functions that copy rather than start:/end:.  Agree, but it conses.
+  Can have both by simply using slice() liberally.
+
+* Have both slice(seq, m, n) and subseq(seq, m, n) ?  The former has
+  sloppy semantics and the latter has strict?
 
 
 collections
