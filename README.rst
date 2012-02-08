@@ -328,6 +328,10 @@ common-dylan
   find-key has a 'failure' keyword argument which it seems should be
   called 'default' or at least 'on-failure'.
 
+  Review other collection functions that might use start/end parameters.
+  They could be usefully added to find-key without conflicting with the
+  current contract.
+
 
 collections
 -----------
