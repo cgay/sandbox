@@ -343,6 +343,13 @@ common-dylan
 * Have both slice(seq, m, n) and subseq(seq, m, n) ?  The former has
   sloppy semantics and the latter has strict?
 
+* Review split() signature.  I think this would be better::
+
+    split(seq, sep, parts: n, start: s, end: e)
+
+  Remove the remove-if-empty parameter, which should have a ? on the
+  end and is easily replaced by choose(complement(empty), ...).
+
 
 collections
 -----------
