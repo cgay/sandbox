@@ -73,6 +73,15 @@ Documentation
 * Revamp the FAQ.  It's so random and negative.  Look at eiffel.com FAQ
   for examples.
 
+  It can be recovered from
+  https://github.com/cgay/dylan-wiki-data/blob/master/pages/main/FAQ/FAQ
+  and everything relating to GD should be removed.  Just use a single
+  page.
+
+  Questions to add:
+
+  Q: How do I change the way my object prints?
+  A: use io; use print; use format; override print-message and print-object
 
 Web
 ===
