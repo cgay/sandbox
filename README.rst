@@ -356,8 +356,7 @@ common-dylan
 
     split(seq, sep, parts: n, start: s, end: e)
 
-  Remove the remove-if-empty parameter, which should have a ? on the
-  end and is easily replaced by choose(complement(empty), ...).
+  Rename the remove-if-empty to rename-if-empty?
 
 
 collections
