@@ -371,6 +371,35 @@ collections
   collections, since collections is standard/"common dylan" while
   collection-extensions started as a GD-only library.
 
+* Write a DEP to introduce slices to the language.  They really need
+  to be supported by the language itself or they're not terribly
+  useful.  Thoughts so far:
+
+  + Slices inherit their (im)mutability from the target sequence.
+
+  + ``slice(sequence, start, end)`` where end may be #f.  Both start
+    and end may be negative to index from the end.
+
+  + ``reverse(slice)`` can sometimes just swap the start and end
+    indices.
+
+  + For mutable slices need to look at all collection mutation
+    functions and see what the semantics should be.
+
+* Add start/end parameters to sequence functions?  Doing this could
+  create a more consistent strings API.  (Alternatively slice() could
+  be used, but it requires allocating memory.)
+
+* Change ``subsequence-position``:
+
+  + Rename to ``find-subsequence``. This function stands out in that
+    it doesn't use a verb-noun naming scheme where a much better (in
+    my opinion) name exists: ``find-subsequence``.
+
+  + Fix inconsistency between ``find-key(..., skip: 2)`` and
+    ``subsequence-position(..., count: 2)``.  Use "skip".
+
+
 
 regular-expressions
 -------------------
