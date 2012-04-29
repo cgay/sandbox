@@ -356,8 +356,6 @@ common-dylan
 
     split(seq, sep, parts: n, start: s, end: e)
 
-  Rename the remove-if-empty to rename-if-empty?
-
 
 collections
 -----------
