@@ -299,7 +299,7 @@ Libraries
 testworks
 ---------
 
-* https://www.opendylan.org/cgi-bin/bugzilla/show_bug.cgi?id=7472
+* http://bugzilla.opendylan.org/show_bug.cgi?id=7472
   is my laundry list of testworks to-do items.
 
 * [Not really testworks, but...]
