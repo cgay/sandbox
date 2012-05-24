@@ -34,15 +34,11 @@ are below...
 Current Priorities
 ==================
 
-(1) Finish wiki and take it live, replacing old wiki.  Adding a git
-    back-end for storing the data since dood doesn't scale well and
-    is difficult to change.
+(#) Replace code in regex, deuce, duim, etc with new strings library.
+
+(#) Issue #150, Getting Started for UNIX.
 
 (#) Finish coil library (and possibly fork it to make a json parser)
-
-(#) Put archive/ under MIT license.
-
-(#) Talk to Andrew Shalit about legal status of the DRM.
 
 (#) Fix the testing situation.  There should be a test suite for every
     library.  All test suites should use the "lib or exe" hack.  It
