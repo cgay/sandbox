@@ -34,11 +34,9 @@ are below...
 Current Priorities
 ==================
 
-(#) Replace code in regex, deuce, duim, etc with new strings library.
+(#) Finish json parser.
 
-(#) Issue #150, Getting Started for UNIX.
-
-(#) Finish coil library (and possibly fork it to make a json parser)
+(#) Finish coil library.
 
 (#) Fix the testing situation.  There should be a test suite for every
     library.  All test suites should use the "lib or exe" hack.  It
@@ -481,32 +479,13 @@ locators
 String Hacking
 ==============
 
-* Make "strings" library re-export most stuff from string-extensions and some
-  things from common-dylan.  Once it's in good shape, propose adding it to
-  common-dylan.
-
 * Various string conversion functions in common-dylan.
-
-* I don't like the way the string-extensions library is broken up into modules.
-  I don't see the need for more than one module there, and their names are odd.
-  Could just add a string-extensions module that uses all the others and
-  exports all.
-
-* The OD and GD string-extensions libraries have diverged enough to be
-  disturbing.  Re-unify them?
-
-* Would there be any name conflicts if common-dylan exported all the
-  string-extensions bindings?
-
-* Write some tests for parse-[character-set-]description in string-hacking.dylan
 
 * Specific functions I've wanted::
 
     . slice(sequence, bpos, epos)
     . slice!(...)
     . slice!-setter(...)
-    . starts-with?(prefix, string)  // arg order good for curry
-    . ends-with?(suffix, string)    // ditto
 
 
 Project Ideas
