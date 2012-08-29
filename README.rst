@@ -59,7 +59,7 @@ Documentation
 =============
 
 * Current by-topic docs don't show return values correctly.  They all
-  have "Returns ." in them.  See the documentation/product/*.xml
+  have "Returns ." in them.  See the documentation/product/\*.xml
   files.
 
 * New, more compact formatting (CSS?) for documentation.
@@ -259,6 +259,15 @@ IDE
       whether the visible methods have corresponding tests, and if so,
       what they are.
 
+* Export Test Suite Skeleton can generate invalid module specs.  The one it generated
+  for regular-expressions had a bad ')' in  ::
+
+      constant <invalid-regex> :: <object>);
+
+  which is defined as ::
+
+      defne constant <invalid-regex> = <illegal-regex>;
+      
 * Implement fast, Eclipse-style "resource search".  This would use the
   compiler database, not be file search.  (Although file search could
   be integrated into it as well, as in Eclipse.)  It could offer to
@@ -293,24 +302,91 @@ Libraries
 testworks
 ---------
 
-* http://bugzilla.opendylan.org/show_bug.cgi?id=7472
-  is my laundry list of testworks to-do items.
+* Testworks laundry list, from
+  http://bugzilla.opendylan.org/show_bug.cgi?id=7472
 
-* [Not really testworks, but...]
-  Export Test Suite Skeleton can generate invalid module specs.  The one it generated
-  for regular-expressions had a bad ')' in  ::
+  + TDD support -- specifically, a way to mark tests as "expected to
+    fail" so that it's feasible to commit tests for code that is not
+    yet written.
 
-      constant <invalid-regex> :: <object>);
+  + Better selection/filtering -- for example, a way to mark a test as
+    "commit", "regress", "pound", and a way to run a subset of those
+    tests.  (Perhaps have a general mechanism for adding attributes to
+    tests and then selecting tests based on those attributes.)
 
-  which is defined as ::
+  + Support for parallel execution of suites and/or tests.  For
+    example, by running subsets of tests in different threads or
+    processes.  (There needs to be a way to mark a test as not being
+    parallelizable.)
 
-      defne constant <invalid-regex> = <illegal-regex>;
-      
-* Write a new unit test module that has a lot of the feature of
-  pyunit, nose, py.test, twisted.trial, etc., and none of the suck of
-  testworks.  It should have some sort of plug-in architecture for
+  + Call the teardown method if there's a failure in the setup method.
+    (I don't know whether Testworks does this or not, actually.)
 
-  adding features that are available on the command-line.
+  + Ability to (optionally) generate a per-test log file.
+
+  + Better reporting -- e.g., subunit/xunit output formats
+
+  + Don't crap all over the screen during a test run; use a log.
+    stdout should just display progress.  (There could be an option
+    to have the current behavior.)
+
+  + Show -progress by default, and show it BEFORE starting each test.
+    Show timing for each test as well.
+
+  + Ability to parse previous test runs and compare to find
+    regressions.  (Implies a standard place to store results, probably
+    svn.)
+
+  + Ability to re-run only the failures in a previous test run.
+
+  + Benchmark support should be integrated.  e.g., just capture the
+    time it takes for every test and add it to the report rather than
+    defining separate benchmarks.  Tracking test timings could be an
+    important way to find performance regressions.
+
+  + Add new assert-* macros that are similar to the existing check-*
+    macros but the description is optional.  Although the description
+    can be a good thing, often it's unnecessary and redundant.  For
+    example, if there's only one assertion in the test then it's
+    obvious which one failed.  Assertions can also be auto-numbered
+    within a test and that number displayed in the error message.
+    When the assertion is in a loop, a message should be supplied by
+    the author, and we'll rely on their good taste to do that.
+
+  + Add config file support.  It should be possible to use a config
+    file to specify most common options and then override those
+    options on the command-line where needed.
+
+  + Use the command-line-parser library instead of the current hand
+    hackery.
+
+  + These two additional restarts should always be available:
+
+    * Skip the remainder of this test
+    * Skip the remainder of this suite
+
+  + I really want hierarchical test names like suite1.suite2.test1
+    It's very convenient for UI purposes.
+
+  + The testworks-specs macros drive me crazy because it's hard to
+    tell/remember what the names of the tests they generate are.
+
+  + ``my-test-suite --list-tests`` and/or ``--list-suites`` and/or
+    ``--list-all``
+
+* Bruce Mitchener's wish list:
+
+  + For one, I'd like an HTML report with some fancy JS stuff in it to
+    make it easy to figure things out
+
+  + It should take a command line arg to log the output to a file
+    (right now you can't just redirect it)
+
+  + It should be documented how to diff reports
+
+  + We should have some sort of archive of them for released builds on
+    various platforms.
+
 
 common-dylan
 ------------
