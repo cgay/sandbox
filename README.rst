@@ -645,6 +645,67 @@ Conditions
   conditions.  Needs to be shared with GD.  <key-error>?
 
 
+Scripting
+=========
+
+Ideas to make Dylan more suitable to the kinds of things Python is
+used for.
+
+Library in One File
+-------------------
+
+This is useful in general, for smaller libraries, but it's also
+important for language acceptance in my opinion.  There's nothing
+worse than trying to check out a new language and finding that you
+have to do all kinds of setup/boilerplate just to run Hello World.
+
+**The Goal:** One ought to be able to say ``dylan hello-world.dylan``
+and have it Just Work.
+
+(1) Create a "dylan" executable in opendylan/bin that is a generic
+    front-end through which all Open Dylan commands are accessed.  It
+    will have subcommands such as 'compile' and 'run'.  This could be
+    a revamp of dylan-compiler or something separate that invokes
+    dylan-compiler, probably the latter.
+
+    There is a single special case: if the first argument to the
+    "dylan" command is the name of an existing file then that file is
+    assumed to be a single-file library and is compiled and run.  The
+    remaning command line arguments are passed along to the resulting
+    binary when invoked.
+
+(2) Open Dylan already supports libraries with one .lid file and one
+    .dylan file::
+
+       ------- foo.lid -------
+       Library: foo
+       Files: foo.dylan
+
+       ------- foo.dylan -------
+       Module: foo
+       
+       define library foo ... end;
+       define module foo ... end;
+
+       format-out("foo\n");
+
+    We can do better.  To get rid of the .lid file as well, Open Dylan
+    can just automatically generate one internally when a .dylan file
+    is passed to the 'compile' or 'run' subcommands.
+
+(3) If someone types  ::
+
+        dylan run foo.dylan
+
+    twice in a row we obviously don't want to compile the entire
+    library again before running it each time, unless it has changed.
+    There's already code in the compiler to prevent unnecessary
+    recompilation but I suspect it's does far more work than needed in
+    this case and is too slow.  We can implement a very quick check in
+    the 'run' command itself to see if the given source file is newer
+    than the binary in OPEN_DYLAN_USER_ROOT/bin.
+
+
 -----------------------------------
 
 Proposal to rename <serious-condition> 

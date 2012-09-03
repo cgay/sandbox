@@ -1,9 +1,20 @@
 #!/usr/bin/python
 
+"""
+Wrap the "opendylan" executable and display the warnings that it fails
+to display.  (It displays them the first time a library is built, but
+not for subsequent builds if the library is considered up-to-date.)
+This script grovels over the log files.  It tries to do it immediately
+after each library finishes compiling rather than waiting until the
+very end.  It displays the warnings even if a given library doesn't
+need to be rebuilt.
+"""
+
+import optparse
 import os
 import re
 import subprocess
-import sys
+
 
 # TODO:
 # * Modify Open Dylan to do all this crap in the first place.
@@ -17,27 +28,43 @@ import sys
 #   passing the opened file descriptor around and using readline.
 
 
-def main ():
-    """
-    Wrap the "opendylan" executable and display the warnings that it
-    fails to display.  (It displays them the first time a library is
-    built, but not for subsequent builds if the library is considered
-    up-to-date.)  This script grovels over the log files.  It tries to
-    do it immediately after each library finishes compiling rather
-    than waiting until the very end.  It displays the warnings even if
-    a given library doesn't need to be rebuilt.
-    """
+default_compiler = os.environ.get('DEFAULT_DYLAN_COMPILER', 'opendylan')
 
-    if len(sys.argv) != 2:
-        print "Usage: %s <library>" % os.path.basename(sys.argv[0])
-        sys.exit(2)
+def main():
+    parser = optparse.OptionParser(usage = "%prog [options] library ...")
+    parser.add_option("--compiler",
+                      help = "Name (or full path) of compiler to use [%default]",
+                      metavar = 'COMP',
+                      default = default_compiler)
+    parser.add_option('--clean',
+                      action = 'store_true',
+                      help = "Remove old build products first [%default]",
+                      default = False)
 
-    library = sys.argv[1]
-    compiler = "opendylan"      # or "minimal-console-compiler" etc
+    options, libs = parser.parse_args()
+    if len(libs) < 1:
+        parser.error("You must specify one or my libraries to compile.")
+    else:
+        for lib in libs:
+            build(lib, compiler = options.compiler, clean = options.clean)
 
-    proc = subprocess.Popen([compiler, '-build', library],
+def build(library, compiler = default_compiler, clean = False):
+    # Remove LD_LIBRARY_PATH, which may be set so that the user's
+    # project will find its used libraries correctly.  They will
+    # conflict with the compiler's libraries if the user has built
+    # "system" libraries (which normally they do, on Linux).
+    env = os.environ.copy()
+    if env.has_key('LD_LIBRARY_PATH'):
+        del env['LD_LIBRARY_PATH']
+
+    # Using a shell for this command so it will find 'opendylan' et al
+    # on the user's PATH.
+    cmd = "%s -build %s %s" % (compiler, '-clean' if clean else '', library)
+    proc = subprocess.Popen(cmd,
+                            shell = True,
                             stdout = subprocess.PIPE,
-                            stderr = subprocess.PIPE)
+                            stderr = subprocess.PIPE,
+                            env = env)
 
     # This will do for now.  Eventually I want to process the output
     # incrementally so the user gets incremental feedback.
