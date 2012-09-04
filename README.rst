@@ -374,6 +374,11 @@ testworks
   + ``my-test-suite --list-tests`` and/or ``--list-suites`` and/or
     ``--list-all``
 
+  + ``assert-every(f, collection)`` (and assert-none) might be useful.
+    There are a lot of tests in apply-dylan-test-suite that do
+    check-true("", every?(...)).  This could improve the failure
+    message significantly.
+
 * Bruce Mitchener's wish list:
 
   + For one, I'd like an HTML report with some fancy JS stuff in it to
