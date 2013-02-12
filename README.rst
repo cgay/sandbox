@@ -43,7 +43,9 @@ Current Priorities
     should be trivial for anyone to run the tests and compare with
     previous results.  Tests should be run automatically after each
     push.  There should be a web page showing historical results.
-    
+
+(#) Get lisp-to-dylan in shape.  Try to get it into Quicklisp.  Try
+    using it to convert CL protobuf (and other) code.
 
 
 Admin 
@@ -134,6 +136,12 @@ Dylan Language
 * For writing code with regular expressions in it, Python's r"..."
   syntax is very nice.  What about adding something similar to Dylan?
   e.g., #r"..." or #/.../
+
+* Better multi-line string support.  Anything that requires a lot of
+  escaping is a non-starter because it makes it extremely difficult to
+  edit the string in a major way.  Python's """ is really good because
+  it handles that case well, and I prefer it to what I just found in
+  C++, Lua, Javascript, or Ruby.
 
 
 Open Dylan
@@ -301,96 +309,6 @@ Libraries
 
 testworks
 ---------
-
-* Testworks laundry list, from
-  http://bugzilla.opendylan.org/show_bug.cgi?id=7472
-
-  + TDD support -- specifically, a way to mark tests as "expected to
-    fail" so that it's feasible to commit tests for code that is not
-    yet written.
-
-  + Better selection/filtering -- for example, a way to mark a test as
-    "commit", "regress", "pound", and a way to run a subset of those
-    tests.  (Perhaps have a general mechanism for adding attributes to
-    tests and then selecting tests based on those attributes.)
-
-  + Support for parallel execution of suites and/or tests.  For
-    example, by running subsets of tests in different threads or
-    processes.  (There needs to be a way to mark a test as not being
-    parallelizable.)
-
-  + Call the teardown method if there's a failure in the setup method.
-    (I don't know whether Testworks does this or not, actually.)
-
-  + Ability to (optionally) generate a per-test log file.
-
-  + Better reporting -- e.g., subunit/xunit output formats
-
-  + Don't crap all over the screen during a test run; use a log.
-    stdout should just display progress.  (There could be an option
-    to have the current behavior.)
-
-  + Show -progress by default, and show it BEFORE starting each test.
-    Show timing for each test as well.
-
-  + Ability to parse previous test runs and compare to find
-    regressions.  (Implies a standard place to store results, probably
-    svn.)
-
-  + Ability to re-run only the failures in a previous test run.
-
-  + Benchmark support should be integrated.  e.g., just capture the
-    time it takes for every test and add it to the report rather than
-    defining separate benchmarks.  Tracking test timings could be an
-    important way to find performance regressions.
-
-  + Add new assert-* macros that are similar to the existing check-*
-    macros but the description is optional.  Although the description
-    can be a good thing, often it's unnecessary and redundant.  For
-    example, if there's only one assertion in the test then it's
-    obvious which one failed.  Assertions can also be auto-numbered
-    within a test and that number displayed in the error message.
-    When the assertion is in a loop, a message should be supplied by
-    the author, and we'll rely on their good taste to do that.
-
-  + Add config file support.  It should be possible to use a config
-    file to specify most common options and then override those
-    options on the command-line where needed.
-
-  + Use the command-line-parser library instead of the current hand
-    hackery.
-
-  + These two additional restarts should always be available:
-
-    * Skip the remainder of this test
-    * Skip the remainder of this suite
-
-  + I really want hierarchical test names like suite1.suite2.test1
-    It's very convenient for UI purposes.
-
-  + The testworks-specs macros drive me crazy because it's hard to
-    tell/remember what the names of the tests they generate are.
-
-  + ``my-test-suite --list-tests`` and/or ``--list-suites`` and/or
-    ``--list-all``
-
-  + ``assert-every(f, collection)`` (and assert-none) might be useful.
-    There are a lot of tests in apply-dylan-test-suite that do
-    check-true("", every?(...)).  This could improve the failure
-    message significantly.
-
-* Bruce Mitchener's wish list:
-
-  + For one, I'd like an HTML report with some fancy JS stuff in it to
-    make it easy to figure things out
-
-  + It should take a command line arg to log the output to a file
-    (right now you can't just redirect it)
-
-  + It should be documented how to diff reports
-
-  + We should have some sort of archive of them for released builds on
-    various platforms.
 
 
 common-dylan
