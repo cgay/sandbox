@@ -34,7 +34,8 @@ are below...
 Current Priorities
 ==================
 
-(#) Finish json parser.
+(#) Clean up warnings in HTTP and wiki code and get wiki working.
+    Current blocker: need bcrypt wrapper for password storage.
 
 (#) Finish coil library.
 
@@ -48,23 +49,8 @@ Current Priorities
     using it to convert CL protobuf (and other) code.
 
 
-Admin 
-=====
-
-* Change archive/ to MIT license. 
-
-* Is there a good way to browse the DRM directly from the source?  It
-  links to pages without ".html" appended.
-
-
 Documentation
 =============
-
-* Current by-topic docs don't show return values correctly.  They all
-  have "Returns ." in them.  See the documentation/product/\*.xml
-  files.
-
-* New, more compact formatting (CSS?) for documentation.
 
 * Revamp the FAQ.  It's so random and negative.  Look at eiffel.com FAQ
   for examples.
@@ -79,27 +65,16 @@ Documentation
   Q: How do I change the way my object prints?
   A: use io; use print; use format; override print-message and print-object
 
-Web
-===
-
-* Take new wiki live.  This should completely replace the static web
-  pages on opendylan.org.  We still need to access bugzilla and
-  possibly some other services.  What non-Dylan stuff is the Apache
-  instance used for?
-
 
 Usability
 =========
 
-* Single file libraries, for scripting.  See the discussion here
-  http://people.csail.mit.edu/gregs/info-dylan-archive-html-2001/msg00698.html
-  My simple hack was going to be to allow Module: foo <<< EOM define
-  lib and mod here EOM.  Need to make sure this works::
+* Single file libraries.  Implement DEP 6.
 
-    #!/usr/local/bin/opendylan
+* Scripting support.  Libraries and shebang line:  #!/usr/local/bin/opendylan
 
-* Make Debian packages available via a simple "aptitude install
-  gwydion-dylan" etc.
+* Make Debian packages available via a simple "apt-get install dylan"
+  etc.
 
 
 Reading List 
@@ -430,6 +405,16 @@ system
       let (exit-code, stdout, stderr) = run-program("whoami");
 
     As for a complete API, I like the way subprocess.Popen works.
+
+* Better error messages in io/*-file-accessor.dylan::
+
+    dylan-compiler -build code/coil.lid
+    ...
+    Opened project coil (/Users/cgay/dylan/src/coil/code/coil.hdp)
+
+    Internal error: read: Is a directory
+    Exiting with return code -1
+
 
 koala
 -----
