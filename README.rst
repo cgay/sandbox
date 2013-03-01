@@ -44,8 +44,8 @@ Current Priorities
     previous results.  Tests should be run automatically after each
     push.  There should be a web page showing historical results.
 
-(#) Get lisp-to-dylan in shape.  Try to get it into Quicklisp.  Try
-    using it to convert CL protobuf (and other) code.
+(#) Multi-line strings and raw strings.  Try implementing raw strings
+    as r-parser.
 
 
 Documentation
@@ -468,6 +468,10 @@ String Hacking
     . slice(sequence, bpos, epos)
     . slice!(...)
     . slice!-setter(...)
+
+* Implement multi-line strings (""") in the compiler if it's not too
+  hairy.  Probably should write a DEP first, or in parallel.  See
+  conversation on Hackers list with subject "Better string constants".
 
 
 Project Ideas
