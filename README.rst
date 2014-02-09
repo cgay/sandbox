@@ -33,6 +33,8 @@ are below...
 Current Priorities
 ==================
 
+Hahaha bullshit.
+
 (#) Clean up warnings in HTTP and wiki code and get wiki working.
     Current blocker: need bcrypt wrapper for password storage.
 
@@ -51,6 +53,9 @@ Current Priorities
 Documentation
 =============
 
+* https://en.wikipedia.org/wiki/Dylan_(programming_language) needs a
+  lot of love.
+
 * Revamp the FAQ.  It's so random and negative.  Look at eiffel.com FAQ
   for examples.
 
@@ -68,7 +73,9 @@ Documentation
 Usability
 =========
 
-* Single file libraries.  Implement DEP 6.
+* Single file libraries.  Implement DEP 6.  (I've since done an about
+  face on DEP 6.  I think it would be best to define the library and
+  modules in the normal way, but in the same source file.)
 
 * Improved scripting support, including ``#!/usr/bin/opendylan``.
 
@@ -116,6 +123,8 @@ Dylan Language
   it handles that case well, and I prefer it to what I just found in
   C++, Lua, Javascript, or Ruby.
 
+* Why are set operations (union, intersection) defined on <sequence>
+  instead of <collection> or <set>?
 
 Open Dylan
 ==========
@@ -283,6 +292,8 @@ Libraries
 testworks
 ---------
 
+* Catch overflow errors when the profiling macro is called and re-run
+  the test without profiling.  Report the error.
 
 common-dylan
 ------------
@@ -363,6 +374,16 @@ collections
   + Fix inconsistency between ``find-key(..., skip: 2)`` and
     ``subsequence-position(..., count: 2)``.  Use "skip".
 
+* add/add! don't specify where an element is added and it differs
+  between lists and stretchy vectors, and it's completely non-obvious
+  what deque will do.  (It adds to the front.)  It would be preferable
+  to have separate functions for adding to the beginning or end of a
+  sequence.  Perhaps push/push! and push-last/push-last!, inspired by
+  <deque>.
+
+  I just found (what I think is) a bug in user-registry-path due to
+  this behavior.  How often does one *not care* where an element will
+  be added?
 
 
 regular-expressions
@@ -552,7 +573,7 @@ Conditions
 
 * Fix condition hierarchy around <invalid-index-error> and friends
   (see comment in collection.dylan) and export a useful set of
-  conditions.  Needs to be shared with GD.  <key-error>?
+  conditions.  <key-error>?
 
 
 
