@@ -1,0 +1,20 @@
+#!/bin/bash
+
+d=/home/cgay/dylan
+if [[ $# != 1 ]]; then
+    readlink $d/opendylan
+else
+    branch="$1"
+    target=$d/opendylan-${branch}
+    if [[ ! -d $target ]]; then
+        echo "${target} does not exist."
+        exit 1
+    else
+        echo -n "Old: "
+        readlink $d/opendylan
+        rm -f $d/opendylan
+        ln -s $target $d/opendylan
+        echo -n "New: "
+        readlink $d/opendylan
+    fi
+fi
