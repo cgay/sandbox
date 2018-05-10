@@ -16,16 +16,13 @@ out what we can get rid of. Here's my first pass attempt.
 *   Do a pass to combine module.dylan and library.dylan files unless there's an
     obvious reason not to combine specific ones.
 
-*   Create a sources/opendylan/ directory and move all the libraries that are
-    only ever expected to be used as part of the OpenDylan implementation into
-    there. Move all general-purpose libraries into sources/lib in a fairly flat
-    structure. (Note that parts of the compiler, like parser-generator, should
-    be in sources/lib rather than sources/opendylan/compiler.) I could imagine
-    directories for crypto, network, etc. A few broad categories. See
-    http://golang.org/packages or any other language's library list for
-    inspiration here.
+Second step will be a package manager so we can get rid of submodules.
 
-```
+### Current directory layout
+
+Current layout, with a few comments...
+
+```none
 opendylan
     CONTRIBUTING.rst
     License.txt
@@ -74,4 +71,24 @@ opendylan
         win32              - Delete.
 
     tools          * - rename to devtools? combine with sources/tools?
+```
+
+### Proposed new directory layout (not exhaustive)
+
+All general-purpose libraries live in their own github repositories. This
+includes many libraries currently in sources/ and sources/lib.
+
+Let's keep the top-level directory sparse and clean!
+
+```none
+opendylan
+    README.md
+    compiler              (was dfmc)
+    dylan                 (was sources/dylan. call it dylanlib?)
+    examples
+    ext                   (submodules for all used general-purpose libraries)
+    registry              (until we get rid of it)
+    runtime               (was sources/runtime-manager)
+    testing               (various cross-library test suites/apps)
+    tools
 ```
