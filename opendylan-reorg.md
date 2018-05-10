@@ -1,14 +1,14 @@
-## Notes on how to simplify Open Dylan
+## Notes on reorganizing the opendylan repo
 
 I want to simplify the Open Dylan implementation in a radical way so that it's
-easier to hack on. First step: figure out what we can get rid of. Here's my
-first pass attempt to identify some large chunks we can move to an "attic"
-directory.
+easier to hack on. First step: clean up and reorganize the repo a bit. Figure
+out what we can get rid of. Here's my first pass attempt.
 
 *   Delete anything related to Windows. We shouldn't care about Windows until
     Dylan is in a good enough state that we can start thinking about trying to
-    expand to other platforms. This means ditch the IDE, which means we can
-    ditch the debugger-nub, which means we can ditch CORBA. Also OLE.
+    expand to other platforms, and until we have someone who wants to work on
+    that. This means ditch the IDE, which means we can ditch the debugger-nub,
+    which means we can ditch CORBA. Also OLE, win32, etc etc.
 
 *   In general we need a lot more README files. Each library should have one.
     Most high level directories should have one.
