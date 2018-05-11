@@ -7,8 +7,8 @@
 # Usage: "choose-dylan master" to select the opendylan-master build
 #        Invoke with no arguments to see current link.
 
-if [[ -n "$D" ]]; then
-    d=${D}
+if [[ -n "$DYLAN" ]]; then
+    d=${DYLAN}
 else
     d=${HOME}/dylan
 fi
