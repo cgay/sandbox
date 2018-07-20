@@ -33,28 +33,18 @@ are below...
 Current Priorities
 ==================
 
-Hahaha bullshit.
+* Summer, 2018 - Publish a road map to an improved Open Dylan
+  experience, especially as concerns new users.
 
-(#) Clean up warnings in HTTP and wiki code and get wiki working.
-    Current blocker: need bcrypt wrapper for password storage.
-
-(#) Finish coil library.
-
-(#) Fix the testing situation.  There should be a test suite for every
-    library.  All test suites should use the "lib or exe" hack.  It
-    should be trivial for anyone to run the tests and compare with
-    previous results.  Tests should be run automatically after each
-    push.  There should be a web page showing historical results.
-
-(#) Multi-line strings and raw strings.  Try implementing raw strings
-    as r-parser.
+* Finish up multi-line strings implementation.
 
 
 Documentation
 =============
 
-* https://en.wikipedia.org/wiki/Dylan_(programming_language) needs a
-  lot of love.
+* There's no link from inside the Library Reference back to the main
+  documentation page or to opendylan.org.  Can we make the website
+  header appear on the doc pages?
 
 * Revamp the FAQ.  It's so random and negative.  Look at eiffel.com FAQ
   for examples.
@@ -69,6 +59,9 @@ Documentation
   Q: How do I change the way my object prints?
   A: use io; use print; use format; override print-message and print-object
 
+* https://en.wikipedia.org/wiki/Dylan_(programming_language) needs a
+  lot of love.
+
 
 Usability
 =========
@@ -77,7 +70,7 @@ Usability
   face on DEP 6.  I think it would be best to define the library and
   modules in the normal way, but in the same source file.)
 
-* Improved scripting support, including ``#!/usr/bin/opendylan``.
+* Improved scripting support, including ``#!/usr/bin/dylan``.
 
 * Package it up for various platforms.  apt, brew, whatever.
 
