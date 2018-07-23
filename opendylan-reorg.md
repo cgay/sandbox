@@ -41,7 +41,7 @@ opendylan
                              live with the libraries themselves. probably that is solved
                              partly by a package manager and by building the library reference
                              docs differently.
-    install                - move to windows/something
+    install                - move to build/windows/{bin,lib} -- dbghelp.dll et al
     m4                     - move to build/m4
     packages               - move to build/packages
     sources
@@ -49,7 +49,7 @@ opendylan
                              of email thread discussing them. windows (IDE) only.
                              move to build/windows along with admin/builds (above)?
         app                - [done] move some of these to examples
-        benchmarks         - move to sources/testing. flatten the structure.
+        benchmarks         - [done] move to sources/testing. flatten the structure.
         collections        - move to lib/collection-extensions
         common-dylan       - move to lib/common-dylan
         corba              - move to lib/corba. only used by debugger-nub
@@ -68,13 +68,13 @@ opendylan
         network            - move to lib/network
         ole                - move to lib/windows/ole
         project-manager    - investigate; not sure its scope.
-        qa                 - move to sources/testing as a first step. Some can be deleted/moved.
+        qa                 - [done] move to sources/testing as a first step. Some can be deleted/moved.
         registry
         runtime-manager
         system             - move to lib/system
-        tools              - move make-dylan-app to app/
+        tools              - [done] move make-dylan-app to app/
                              move map-statistics to lib/windows/
-                             delete templates/
+                             [done] delete templates/
         win32              - move to lib/windows/win32
     tools                  - rename to devtools? combine with sources/tools?
 ```
