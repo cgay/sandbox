@@ -27,7 +27,7 @@ Current layout, with comments on how to change each directory...
 
 ```none
 opendylan
-    CONTRIBUTING.rst       - move content to Hacker Guide. [done]
+    CONTRIBUTING.rst       - delete, now that moved to Hacker Guide
     License.txt
     Makefile.in
     OVERVIEW.txt           - should be integrated with Hacker Guide. Wasn't totally obvious
@@ -35,15 +35,15 @@ opendylan
     README.rst
     Setup.bmp              - [done] move or delete
     Setup.xcf              - [done] move or delete
-    admin/builds           - rename to build/windows
+    admin/builds           - [done] rename to build/windows
     configure.ac
     documentation          - library-reference is problematic. documentation should in general
                              live with the libraries themselves. probably that is solved
                              partly by a package manager and by building the library reference
                              docs differently.
-    install                - move to build/windows/{bin,lib} -- dbghelp.dll et al
-    m4                     - move to build/m4
-    packages               - move to build/packages
+    install                - [done] move to build/windows/{bin,lib} -- dbghelp.dll et al
+    m4                     - [done] move to build/m4
+    packages               - [done] move to build/packages
     sources
         Library-Packs      - can these be deleted? if not, add README.rst with summary
                              of email thread discussing them. windows (IDE) only.
@@ -73,7 +73,7 @@ opendylan
         runtime-manager
         system             - move to lib/system
         tools              - [done] move make-dylan-app to app/
-                             move map-statistics to lib/windows/
+                             [done (deleted)] move map-statistics to lib/windows/
                              [done] delete templates/
         win32              - move to lib/windows/win32
     tools                  - rename to devtools? combine with sources/tools?
