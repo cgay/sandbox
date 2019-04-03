@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Maintain a symbolic link to the current version of opendylan I'm using.
+# This is convenient because I sometimes have multiple branches of opendylan
+# plus the current released version.
+
+# Usage: "choose-dylan master" to select the opendylan-master build
+#        Invoke with no arguments to see current link.
+
+if [[ -n "$DYLAN" ]]; then
+    d=${DYLAN}
+else
+    d=${HOME}/dylan
+fi
+
+if [[ $# != 1 ]]; then
+    readlink $d/opendylan
+else
+    branch="$1"
+    target=$d/opendylan-${branch}
+    if [[ ! -d $target ]]; then
+        echo "${target} does not exist."
+        exit 1
+    else
+        echo -n "Old: "
+        readlink $d/opendylan
+        rm -f $d/opendylan
+        ln -s $target $d/opendylan
+        echo -n "New: "
+        readlink $d/opendylan
+    fi
+fi
