@@ -26,10 +26,10 @@
  '(column-number-mode t)
  '(custom-enabled-themes nil)
  '(erc-menu-mode t)
+ '(show-paren-mode nil)
  '(fill-column 79)
  '(indent-tabs-mode nil)
  '(package-selected-packages (quote (markdown-mode)))
- '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -43,3 +43,6 @@
 (add-to-list 'package-archives
              '("melpa-stable" . "https://stable.melpa.org/packages/"))
 (package-initialize)
+
+(add-hook 'shell-mode-hook 'dirtrack-mode)
+(setq-default dirtrack-list '(" \\([^ ]+\\) " 1 t)) ; t = multi-line
