@@ -116,6 +116,20 @@ export EDITOR=emacs
 alias emacs='TERM=vt100 PAGER=/bin/cat emacs'
 export PATH=/home/cgay/bin:/usr/local/bin:/usr/bin:/bin
 
+### Dylan
+
+export DYLAN=${HOME}/dylan
+export PATH=${DYLAN}/opendylan/bin:${DYLAN}/bin:${PATH}
+export OD=${DYLAN}/ws.od/opendylan
+export PYTHONPATH=${OD}/documentation/sphinx-extensions
+# Select a Dylan workspace, based on my naming scheme.
+# Confuses emacs PWD tracking. See dirtrack stuff in .emacs.
+# Also use M-x dirs to fix.
+# Note that dw od/opendylan works.
+function dw () {
+    cd ${DYLAN}/ws.${1}
+}
+
 ### GIT branch shown in prompt
 
 bash_prompt_cmd() {
@@ -125,6 +139,9 @@ bash_prompt_cmd() {
         prompt_err=" [$exitcode]"
     fi
     wd=${PWD/${HOME}/\~}
+    find_git_branch
+    find_git_dirty
+    export PS1="\n\t ${wd}${prompt_err}${git_branch}${git_dirty}\n$ "
 }
 
 find_git_branch() {
@@ -146,15 +163,3 @@ find_git_dirty() {
         git_dirty=''
     fi
 }
-
-PROMPT_COMMAND="bash_prompt_cmd; find_git_branch; find_git_dirty; $PROMPT_COMMAND"
-
-export PS1='\n\t ${wd}'$prompt_err'${git_branch}${git_dirty}\n$ '
-
-### Dylan
-
-export DYLAN=${HOME}/dylan
-export PATH=${DYLAN}/opendylan/bin:${DYLAN}/ws.dylan-tool/_build/bin:${PATH}
-export OD=${DYLAN}/ws.od/opendylan
-export PYTHONPATH=${OD}/documentation/sphinx-extensions
-
