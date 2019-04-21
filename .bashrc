@@ -136,30 +136,24 @@ bash_prompt_cmd() {
     if [ $? -eq 0 ]; then
         prompt_err=""
     else
-        prompt_err=" [$exitcode]"
+        prompt_err="[$exitcode] "
     fi
     wd=${PWD/${HOME}/\~}
-    find_git_branch
-    find_git_dirty
-    export PS1="\n\t ${wd}${prompt_err}${git_branch}${git_dirty}\n$ "
+    find_git_status
+    export PS1="\n\t ${wd} ${prompt_err}${git_status}\n$ "
 }
 
-find_git_branch() {
-    # Based on: http://stackoverflow.com/a/13003854/170413
-    local branch
-    git_branch=""
-    if branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null); then
-        if [[ $? -eq 0 ]]; then
-            git_branch=" ($branch)"
-        fi
-    fi
-}
-
-find_git_dirty() {
+find_git_status() {
     local status=$(git status --porcelain --untracked-files=no 2> /dev/null)
+    git_dirty=''
     if [[ "$status" != "" ]]; then
         git_dirty='*'
-    else
-        git_dirty=''
+    fi
+    local branch
+    git_status=""
+    if branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null); then
+        if [[ $? -eq 0 ]]; then
+            git_status="(${branch}${git_dirty}) "
+        fi
     fi
 }

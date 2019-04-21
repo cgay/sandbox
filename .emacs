@@ -45,4 +45,4 @@
 (package-initialize)
 
 (add-hook 'shell-mode-hook 'dirtrack-mode)
-(setq-default dirtrack-list '(" \\([^ ]+\\) " 1 t)) ; t = multi-line
+(setq-default dirtrack-list '(" \\([^ ]+\\)\\( |$\\)" 1 t)) ; t = multi-line
