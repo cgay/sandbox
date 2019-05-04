@@ -1,5 +1,22 @@
 ;; My minimalist .emacs
 
+;; load emacs 24's package system. Add MELPA repository.
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (add-to-list
+   'package-archives
+   '("melpa-stable" . "https://stable.melpa.org/packages/")
+   t)
+  (add-to-list
+   'package-archives
+   '("melpa" . "http://melpa.milkbox.net/packages/")
+   t)
+  (add-to-list
+   'package-archives
+   '("gnu" . "http://elpa.gnu.org/packages/")
+   t))
+
+
 (setq dylan-mode-dir (concat (getenv "DYLAN") "/ws.all/dylan-mode"))
 (add-to-list 'load-path dylan-mode-dir)
 (load (concat dylan-mode-dir "/dylan-mode.el"))
@@ -26,10 +43,10 @@
  '(column-number-mode t)
  '(custom-enabled-themes nil)
  '(erc-menu-mode t)
- '(show-paren-mode nil)
  '(fill-column 79)
  '(indent-tabs-mode nil)
- '(package-selected-packages (quote (markdown-mode)))
+ '(package-selected-packages (quote (lsp-mode markdown-mode)))
+ '(show-paren-mode nil)
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
