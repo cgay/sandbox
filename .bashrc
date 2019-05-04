@@ -130,7 +130,7 @@ function dw () {
     cd ${DYLAN}/ws.${1}
 }
 
-### GIT branch shown in prompt
+### Shell prompt
 
 bash_prompt_cmd() {
     if [ $? -eq 0 ]; then
@@ -157,3 +157,11 @@ find_git_status() {
         fi
     fi
 }
+
+PROMPT_COMMAND="bash_prompt_cmd; $PROMPT_COMMAND"
+
+
+### Go
+
+export PATH=${PATH}:/usr/local/go/bin
+export GOPATH=${HOME}/go
