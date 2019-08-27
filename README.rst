@@ -6,8 +6,7 @@ are below...
 
 .. contents::
 
-.. Current Priorities
-   Documentation
+.. Documentation
    Usability
    Reading List
    Dylan Language
@@ -28,15 +27,6 @@ are below...
    String Hacking
    Project Ideas
    Conditions
-
-
-Current Priorities
-==================
-
-* Summer, 2018 - Publish a road map to an improved Open Dylan
-  experience, especially as concerns new users.
-
-* Finish up multi-line strings implementation.
 
 
 Documentation
