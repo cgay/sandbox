@@ -1,5 +1,7 @@
 ;; My minimalist .emacs
 
+;; Requires ${DYLAN}
+
 ;; load emacs 24's package system. Add MELPA repository.
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -42,10 +44,12 @@
  '(buffers-menu-show-directories t)
  '(column-number-mode t)
  '(custom-enabled-themes nil)
+ '(debug-on-error t)
+ '(dylan-continuation-indent 2)
  '(erc-menu-mode t)
  '(fill-column 79)
  '(indent-tabs-mode nil)
- '(package-selected-packages (quote (lsp-mode markdown-mode)))
+ '(package-selected-packages (quote (deadgrep lsp-mode markdown-mode)))
  '(show-paren-mode nil)
  '(tool-bar-mode nil))
 (custom-set-faces

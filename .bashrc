@@ -112,8 +112,8 @@ if ! shopt -oq posix; then
   fi
 fi
 
+alias emacs='PAGER=/bin/cat emacsclient --tty -a "" --socket-name="main"'
 export EDITOR=emacs
-alias emacs='TERM=vt100 PAGER=/bin/cat emacs'
 export PATH=/home/cgay/bin:/usr/local/bin:/usr/bin:/bin
 
 ### Dylan

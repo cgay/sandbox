@@ -1,7 +1,8 @@
+[alias]
+	s = status
+        b = branch
+        co = checkout
+
 [user]
 	email = carlgay@gmail.com
 	name = Carl Gay
-[alias]
-	s = status
-	co = checkout
-	b = branch
