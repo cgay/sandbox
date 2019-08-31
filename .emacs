@@ -65,5 +65,7 @@
              '("melpa-stable" . "https://stable.melpa.org/packages/"))
 (package-initialize)
 
+;; This makes emacs shell notice when my current directory changes.
+;; In particular it works with the dw function in my .bashrc.
 (add-hook 'shell-mode-hook 'dirtrack-mode)
 (setq-default dirtrack-list '(" \\([^ ]+\\) " 1 t)) ; t = multi-line
