@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Run a git subcommand on each git repo under the current directory.
+# Useful for workspaces that contain multiple git repositories.
+# Liberal use of git aliases helps too, e.g. for "git status -s -b".
+# There must be better tools for this already...
+
+if [[ $# -lt 1 ]]; then
+    echo "Usage: $(basename $0) <git subcommand and args>"
+    exit 2
+fi
+
+start_dir=`pwd`
+for dir in $(find $start_dir -type d -name .git | sed s,/.git,,); do
+    echo "${dir}:"
+    cd $dir
+    git "$@"
+done
+cd $start_dir
