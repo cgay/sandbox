@@ -1,7 +1,8 @@
 [user]
-	email = carlgay@gmail.com
-	name = Carl Gay
+        email = carlgay@gmail.com
+        name = Carl Gay
 [alias]
-	s = status
-	b = branch
-	co = checkout
+        s = status
+        b = branch
+        co = checkout
+        sb = status --short --branch
