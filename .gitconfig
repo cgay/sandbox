@@ -6,3 +6,6 @@
         b = branch
         co = checkout
         sb = status --short --branch
+	ll = log --oneline -10
+	l20 = log --oneline -20
+	l40 = log --oneline -40
