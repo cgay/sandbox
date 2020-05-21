@@ -1,6 +1,6 @@
 Module: scepter-file-front-end
 Author: Jason Trenouth
-Copyright: Copyright 1996 Functional Objects, Inc.  All rights reserved.
+Copyright: Copyright 1996 Functional Objects, Inc.  All rights reserved
 
 define constant $eoi-token = 0;
 define constant $SEMICOLON-token = 1;
