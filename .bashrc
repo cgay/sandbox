@@ -112,22 +112,37 @@ if ! shopt -oq posix; then
   fi
 fi
 
-alias emacs='PAGER=/bin/cat emacsclient --tty -a "" --socket-name="main"'
-export EDITOR=emacs
-export PATH=/home/cgay/bin:/usr/local/bin:/usr/bin:/bin
+### Basics
+
+export PATH=${HOME}/bin:/usr/local/bin:/usr/bin:/bin
+
+
+### Emacs
+
+if [[ -n "${INSIDE_EMACS}" ]]; then
+    export PAGER=/bin/cat
+    export TERM=vt100      # colorization works
+fi
+    
+export EDITOR='emacsclient --tty'
+
 
 ### Dylan
 
 export DYLAN=${HOME}/dylan
 export PATH=${DYLAN}/opendylan/bin:${DYLAN}/bin:${PATH}
-export OD=${DYLAN}/ws.od/opendylan
+export OD=${DYLAN}/workspaces/od/opendylan
+export ALL=${DYLAN}/workspaces/all
 export PYTHONPATH=${OD}/documentation/sphinx-extensions
+
+# Temp fix for regular-expressions library hang problem.
+export LD_PRELOAD=/home/cgay/libunwind/install/lib/libunwind.so.8
+
 # Select a Dylan workspace, based on my naming scheme.
 # Confuses emacs PWD tracking. See dirtrack stuff in .emacs.
 # Also use M-x dirs to fix.
-# Note that dw od/opendylan works.
 function dw () {
-    cd ${DYLAN}/ws.${1}
+    cd ${DYLAN}/workspaces/${1}
 }
 
 ### Shell prompt

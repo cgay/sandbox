@@ -19,7 +19,7 @@
    t))
 
 
-(setq dylan-mode-dir (concat (getenv "DYLAN") "/ws.all/dylan-mode"))
+(setq dylan-mode-dir (concat (getenv "DYLAN") "/workspaces/all/dylan-mode"))
 (add-to-list 'load-path dylan-mode-dir)
 (load (concat dylan-mode-dir "/dylan-mode.el"))
 (add-to-list 'auto-mode-alist '("\\.dylan\\'" . dylan-mode))
@@ -50,6 +50,7 @@
  '(fill-column 79)
  '(indent-tabs-mode nil)
  '(package-selected-packages (quote (deadgrep lsp-mode markdown-mode)))
+ '(safe-local-variable-values (quote ((Syntax . Common-Lisp))))
  '(show-paren-mode nil)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -65,7 +66,21 @@
              '("melpa-stable" . "https://stable.melpa.org/packages/"))
 (package-initialize)
 
+;; Get rid of the bad background for things like ReStructured Text headers when
+;; inside screen and possibly other times. This probably ought to be
+;; conditionalized to the display type.
+(let ((frame-background-mode 'light)) (frame-set-background-mode nil))
+
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
 ;; This makes emacs shell notice when my current directory changes.
 ;; In particular it works with the dw function in my .bashrc.
 (add-hook 'shell-mode-hook 'dirtrack-mode)
 (setq-default dirtrack-list '(" \\([^ ]+\\) " 1 t)) ; t = multi-line
+
+
+(setq inferior-lisp-program "/usr/bin/sbcl")
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/elpa-src/slime-2.23")
+(require 'slime)
+(slime-setup)
+(put 'narrow-to-region 'disabled nil)

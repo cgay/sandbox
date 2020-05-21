@@ -2,7 +2,7 @@
 
 # Add LLVM apt source
 sudo apt-get install -y software-properties-common
-sudo apt-add-repository 'deb http://apt.llvm.org/stretch/ llvm-toolchain-stretch-8 main'
+sudo apt-add-repository 'deb http://apt.llvm.org/buster/ llvm-toolchain-buster-8 main'
 wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
 sudo apt-get update
 
