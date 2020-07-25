@@ -116,15 +116,22 @@ fi
 
 export PATH=${HOME}/bin:/usr/local/bin:/usr/bin:/bin
 
+# Pass $TERM (usually xterm-256color) through to screen so that colors work
+# better. (Primarily I was seeing some RST headers being black on black.)
+alias screen='screen -e^jj -T $TERM'
 
 ### Emacs
 
+# shell buffers
 if [[ -n "${INSIDE_EMACS}" ]]; then
     export PAGER=/bin/cat
-    export TERM=vt100      # colorization works
+    export TERM=emacs           # colorization works, e.g., for git diff
 fi
-    
-export EDITOR='emacsclient --tty'
+
+# I'm always inside screen anyway and emacsclient can cause problems with
+# 'git rebase -i' which I'm too lazy to debug.
+alias emacs='PAGER=/bin/cat emacs -nw'
+export EDITOR=emacs
 
 
 ### Dylan

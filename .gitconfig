@@ -8,3 +8,5 @@
         sb = status --short --branch
 	ll = log --oneline -20
 	lll = log --oneline -40
+[credential]
+	helper = cache

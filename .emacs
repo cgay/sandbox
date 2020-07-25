@@ -39,7 +39,9 @@
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
-   ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
+   ;;["black" "red4" "green4" "yellow4" "blue3" "magenta4" "cyan4" "white"]
+   ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"]
+   )
  '(buffers-menu-max-size 30)
  '(buffers-menu-show-directories t)
  '(column-number-mode t)
@@ -71,10 +73,11 @@
 ;; conditionalized to the display type.
 (let ((frame-background-mode 'light)) (frame-set-background-mode nil))
 
+;;; Shell mode
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
-;; This makes emacs shell notice when my current directory changes.
-;; In particular it works with the dw function in my .bashrc.
+;; This makes emacs shell notice when my current directory changes.  In
+;; particular it works with the dw (dylan workspace) function in my .bashrc.
 (add-hook 'shell-mode-hook 'dirtrack-mode)
 (setq-default dirtrack-list '(" \\([^ ]+\\) " 1 t)) ; t = multi-line
 
