@@ -1,0 +1,278 @@
+Where do we have sequence functions/utilities/whatever lying around?
+
+Is there something that will count occurrences of a value in a sequence?
+(Yes, deuce has `count(<sequence>)`.)
+
+*  dylan library
+   *  `<sequence>`
+   *  `<vector>`
+   *  `<deque>`
+   *  `<simple-vector>`
+   *  `<simple-object-vector>`
+   *  `<stretchy-vector>`
+   *  `<deque>`
+   *  `<list>`
+   *  `<pair>`
+   *  `<empty-list>`
+   *  `<range>`
+   *  `<string>`
+   *  `<byte-string>`
+   *  `<unicode-string>`
+   *  Collection Properties
+      *  `empty?`
+      *  `size`
+      *  `size-setter`
+      *  `rank`
+      *  `row-major-index`
+      *  `dimensions`
+      *  `dimension`
+      *  `key-test`
+      *  `key-sequence`
+   *  Selecting Elements
+      *  `element`
+      *  `element-setter`
+      *  `aref`
+      *  `aref-setter`
+      *  `first`
+      *  `second`
+      *  `third`
+      *  `first-setter`
+      *  `second-setter`
+      *  `third-setter`
+      *  `last`
+      *  `last-setter`
+      *  `head`
+      *  `tail`
+      *  `head-setter`
+      *  `tail-setter`
+   *  Adding and Removing Elements
+      *  `add`
+      *  `add!`
+      *  `add-new`
+      *  `add-new!`
+      *  `remove`
+      *  `remove!`
+      *  `push`
+      *  `pop`
+      *  `push-last`
+      *  `pop-last`
+   *  Reordering Elements
+      *  `reverse`
+      *  `reverse!`
+      *  `sort`
+      *  `sort!`
+   *  Set Operations
+      *  `intersection`
+      *  `union`
+      *  `remove-duplicates`
+      *  `remove-duplicates!`
+   *  Subsequence Operations
+      *  `copy-sequence`
+      *  `concatenate`
+      *  `concatenate-as`
+      *  `replace-subsequence!`
+      *  `subsequence-position`
+   *  Mapping and Reducing
+      *  Simple Mapping
+         *  `do`
+         *  `map`
+         *  `map-as`
+         *  `map-into`
+         *  `any?`
+         *  `every?`
+      *  Extensible Mapping Functions
+         *  `reduce`
+         *  `reduce1`
+         *  `choose`
+         *  `choose-by`
+      *  Other Mapping Functions
+         *  `member?`
+         *  `find-key`
+         *  `remove-key!`
+         *  `replace-elements!`
+         *  `fill!`
+      *  The Iteration Protocol
+         *  `forward-iteration-protocol`
+         *  `backward-iteration-protocol`
+      *  The Table Protocol
+         *  `table-protocol`
+         *  `merge-hash-codes`
+         *  `object-hash`
+*  common-dylan:common-extensions
+   *  Concrete subclasses of DRM-specified classes
+      *  `<stretchy-object-vector>`
+      *  `<object-deque>`
+   *  Other
+      *  `<stretchy-sequence>`
+      *  `<string-table>`    (not a sequence but of interest?)
+      *  `remove-all-keys!`  (does it work on sequences?)
+      *  `concatenate!`
+      *  `difference`
+      *  `position`
+      *  `split`
+      *  `join`
+      *  `find-element`  (a complement to `find-key` that returns the value)
+*  cl:cl-sequences
+   *  `cl-position`
+   *  `cl-position-if`
+   *  `cl-find`
+   *  `cl-find-if,`
+   *  `cl-assoc`
+   *  `cl-assoc-if`
+   *  `cl-count`
+   *  `cl-count-if`
+   *  `cl-remove`
+   *  `cl-remove-if`
+   *  `cl-remove!`
+   *  `cl-remove-if!`
+   *  `cl-substitute`
+   *  `cl-substitute-if`
+   *  `cl-substitute!`
+   *  `cl-substitute-if!`
+   *  `cl-remove-duplicates`
+   *  `cl-remove-duplicates!`
+   *  `cl-search`
+   *  `cl-mismatch`
+   *  `cl-merge`
+*  deuce:deuce-internals
+   *  `position`
+   *  `position-if`
+   *  `count`
+   *  `insert-at!`
+   *  `remove-at!`
+*  collection-extensions:self-organizing-list
+   *  `<self-organizing-list>`
+*  collection-extensions:subseq
+   *  `<subsequence>`
+   *  `<byte-vector-subsequence>`
+   *  `subsequence`
+*  collection-extensions:vector-search
+   *  `find-first-key`
+   *  `find-last-key`
+*  collection-extensions:heap
+   *  `<heap>`
+   *  `heap-pop`
+   *  `heap-push`
+   *  `random-iteration-protocol`
+*  collection-extensions:sde-vector
+   *  `<sde-vector>`
+*  collection-extensions:sequence-diff
+   *  `sequence-diff`
+   *  `<script-entry>`
+   *  `<insert-entry>`
+   *  `<delete-entry>`
+   *  `element-count`
+   *  `source-index`
+   *  `dest-index`
+*  collection-extensions:collection-utilities
+   *  `singleton?`
+   *  `key-exists?`
+*  collection-extensions:sequence-utilities
+   *  `push!`
+   *  `pop!`
+   *  `pair?`
+   *  `null?`
+   *  `list?`
+   *  `xpair`
+   *  `tabulate`
+   *  `list*`
+   *  `take`
+   *  `drop`
+   *  `last-pair`
+   *  `reverse-append`
+   *  `unfold`
+   *  `unfold/tail`
+   *  `foldl`
+   *  `foldr`
+   *  `pair-foldl`
+   *  `pair-foldr`
+   *  `reduce-l`
+   *  `reduce-r`
+   *  `heads`
+   *  `tails`
+   *  `concatenate-map`
+   *  `pair-do`
+   *  `choose-map`
+   *  `partition`
+   *  `assoc`
+   *  `apair`
+   *  `alist-copy`
+   *  `alist-delete`
+   *  `satisfies`
+   *  `index`
+   *  `find`
+   *  `find-tail`
+   *  `precedes?`
+   *  `split-at`
+*  collections:bit-vector
+   *  `<bit>`
+   *  `<bit-vector>`
+   *  `word-size`
+   *  `bit-vector-word`
+   *  `bit-vector-and`
+   *  `bit-vector-and!`
+   *  `bit-vector-andc2`
+   *  `bit-vector-andc2!`
+   *  `bit-vector-or`
+   *  `bit-vector-or!`
+   *  `bit-vector-xor`
+   *  `bit-vector-xor!`
+   *  `bit-vector-not`
+   *  `bit-vector-not!`
+   *  `bit-count`
+*  collections:bit-set
+   *  `<bit-set>`
+   *  `set-add`
+   *  `set-add!`
+   *  `set-remove`
+   *  `set-remove!`
+   *  `set-union`
+   *  `set-union!`
+   *  `set-intersection`
+   *  `set-intersection!`
+   *  `set-difference`
+   *  `set-difference!`
+   *  `set-complement`
+   *  `set-complement!`
+   *  `infinite?`
+   *  `copy-bit-set!`
+   *  `empty-bit-set!`
+   *  `universal-bit-set!`
+*  collections:collectors
+   *  `collector-protocol`
+   *  `collecting`
+   *  `collect-into`
+   *  `collect-first-into`
+   *  `collect-last-into`
+   *  `collect`
+   *  `collect-first`
+   *  `collect-last`
+   *  `collected`
+*  collections:plists
+   *  `get-property`
+   *  `put-property!`
+   *  `do-put-property!`
+   *  `keyword-sequence`
+   *  `value-sequence`
+   *  `remove-property!`
+   *  `do-remove-property!`
+   *  `remove-keywords`
+   *  `with-keywords-removed`
+*  collections:set
+   *  `<set>`
+   *  `<object-set>`
+*  collections:table-extensions
+   *  `<string-table>`
+   *  `<hash-state>`
+   *  `collection-hash`
+   *  `sequence-hash`
+   *  `collection-hash!`
+   *  `sequence-hash!`
+   *  `values-hash`
+   *  `string-hash`
+   *  `case-insensitive-string-hash`
+   *  `case-insensitive-equal`
+   *  `remove-all-keys!`
+   *  `merge-hash-ids`
+   *  `table`
+   *  `<case-insensitive-string-table>`
