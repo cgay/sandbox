@@ -139,6 +139,8 @@ export EDITOR=emacs
 export DYLAN=${HOME}/dylan
 export PATH=${DYLAN}/opendylan/bin:${DYLAN}/bin:${PATH}
 export OD=${DYLAN}/workspaces/od/opendylan
+export PB=${DYLAN}/workspaces/pb
+export DT=${DYLAN}/workspaces/dt
 export ALL=${DYLAN}/workspaces/all
 export PYTHONPATH=${OD}/documentation/sphinx-extensions
 
@@ -187,3 +189,8 @@ PROMPT_COMMAND="bash_prompt_cmd; $PROMPT_COMMAND"
 
 export PATH=${PATH}:/usr/local/go/bin
 export GOPATH=${HOME}/go
+
+
+### Lisp
+
+export PATH=${HOME}/google/protobuf-install-dir/bin:$PATH

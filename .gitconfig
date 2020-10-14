@@ -2,6 +2,7 @@
         email = carlgay@gmail.com
         name = Carl Gay
 [alias]
+        amend = commit -a --amend --no-edit
         s = status
         b = branch
         co = checkout

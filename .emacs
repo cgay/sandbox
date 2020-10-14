@@ -62,6 +62,7 @@
  ;; If there is more than one, they won't work right.
  )
 
+(put 'narrow-to-region 'disabled nil)
 
 (require 'package)
 (add-to-list 'package-archives
@@ -82,8 +83,12 @@
 (setq-default dirtrack-list '(" \\([^ ]+\\) " 1 t)) ; t = multi-line
 
 
-(setq inferior-lisp-program "/usr/bin/sbcl")
+
+;;; SLIME / SWANK
+
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/elpa-src/slime-2.23")
 (require 'slime)
 (slime-setup)
-(put 'narrow-to-region 'disabled nil)
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
+(setq inferior-lisp-program "/usr/local/bin/sbcl")
+(global-set-key (kbd "C-c l") 'slime-repl)
