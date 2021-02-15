@@ -140,6 +140,7 @@ export DYLAN=${HOME}/dylan
 export PATH=${DYLAN}/opendylan/bin:${DYLAN}/bin:${PATH}
 export OD=${DYLAN}/workspaces/od/opendylan
 export PB=${DYLAN}/workspaces/pb
+export PLAY=${DYLAN}/workspaces/playground
 export DT=${DYLAN}/workspaces/dt
 export ALL=${DYLAN}/workspaces/all
 export PYTHONPATH=${OD}/documentation/sphinx-extensions
