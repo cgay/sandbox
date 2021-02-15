@@ -39,21 +39,21 @@
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
-   ;;["black" "red4" "green4" "yellow4" "blue3" "magenta4" "cyan4" "white"]
-   ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"]
-   )
+   ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
  '(buffers-menu-max-size 30)
  '(buffers-menu-show-directories t)
  '(column-number-mode t)
  '(custom-enabled-themes nil)
  '(debug-on-error t)
  '(dylan-continuation-indent 2)
+ '(emacs-lisp-docstring-fill-column 79)
  '(erc-menu-mode t)
  '(fill-column 79)
  '(indent-tabs-mode nil)
  '(package-selected-packages (quote (deadgrep lsp-mode markdown-mode)))
  '(safe-local-variable-values (quote ((Syntax . Common-Lisp))))
  '(show-paren-mode nil)
+ '(show-trailing-whitespace t)
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -80,7 +80,10 @@
 ;; This makes emacs shell notice when my current directory changes.  In
 ;; particular it works with the dw (dylan workspace) function in my .bashrc.
 (add-hook 'shell-mode-hook 'dirtrack-mode)
-(setq-default dirtrack-list '(" \\([^ ]+\\) " 1 t)) ; t = multi-line
+(setq-default dirtrack-list
+              '("^[0-9][0-9]:[0-9][0-9]:[0-9][0-9] \\([^ ]+\\) "
+                1                       ; group to use
+                t))                     ; multi-line match?
 
 
 
@@ -92,3 +95,4 @@
 (load (expand-file-name "~/quicklisp/slime-helper.el"))
 (setq inferior-lisp-program "/usr/local/bin/sbcl")
 (global-set-key (kbd "C-c l") 'slime-repl)
+
