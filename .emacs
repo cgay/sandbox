@@ -1,28 +1,3 @@
-;; My minimalist .emacs
-
-;; Requires ${DYLAN}
-
-;; load emacs 24's package system. Add MELPA repository.
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (add-to-list
-   'package-archives
-   '("melpa-stable" . "https://stable.melpa.org/packages/")
-   t)
-  (add-to-list
-   'package-archives
-   '("melpa" . "http://melpa.milkbox.net/packages/")
-   t)
-  (add-to-list
-   'package-archives
-   '("gnu" . "http://elpa.gnu.org/packages/")
-   t))
-
-
-(setq dylan-mode-dir (concat (getenv "DYLAN") "/workspaces/all/dylan-mode"))
-(add-to-list 'load-path dylan-mode-dir)
-(load (concat dylan-mode-dir "/dylan-mode.el"))
-(add-to-list 'auto-mode-alist '("\\.dylan\\'" . dylan-mode))
 
 ;; C-c c to compile
 (global-set-key [?\C-c?c] 'compile)
@@ -49,8 +24,10 @@
  '(emacs-lisp-docstring-fill-column 79)
  '(erc-menu-mode t)
  '(fill-column 79)
+ '(go-fontify-function-calls nil)
+ '(go-fontify-variables t)
  '(indent-tabs-mode nil)
- '(package-selected-packages (quote (deadgrep lsp-mode markdown-mode)))
+ '(package-selected-packages (quote (hover lsp-mode protobuf-mode go-mode magit slime)))
  '(safe-local-variable-values (quote ((Syntax . Common-Lisp))))
  '(show-paren-mode nil)
  '(show-trailing-whitespace t)
@@ -62,12 +39,27 @@
  ;; If there is more than one, they won't work right.
  )
 
-(put 'narrow-to-region 'disabled nil)
+;; load emacs 24's package system. Add MELPA repository.
+(progn
+  (require 'package)
 
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/"))
-(package-initialize)
+  ;; What the honest fuck?
+  ;; https://emacs.stackexchange.com/questions/61997/how-do-i-fix-incomprehensible-buffer-error-when-running-list-packages
+  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
+  ;; Comment/uncomment this line to enable MELPA Stable if desired.  See
+  ;; `package-archive-priorities` and `package-pinned-packages`. Most users
+  ;; will not need or want to do this.
+  (setq package-archives
+        '(("melpa-stable" . "https://stable.melpa.org/packages/")))
+  ;; (add-to-list 'package-archives
+  ;;              '("melpa" . "https://melpa.org/packages/"))
+  (package-initialize))
+
+;;; This can't possibly be the right way to load lsp-mode, right?
+(load-file "~/.emacs.d/elpa/lsp-mode-8.0.0/lsp-mode.el")
+
+(put 'narrow-to-region 'disabled nil)
 
 ;; Get rid of the bad background for things like ReStructured Text headers when
 ;; inside screen and possibly other times. This probably ought to be
@@ -95,4 +87,14 @@
 (load (expand-file-name "~/quicklisp/slime-helper.el"))
 (setq inferior-lisp-program "/usr/local/bin/sbcl")
 (global-set-key (kbd "C-c l") 'slime-repl)
+
+;;; Dylan
+
+(defvar *dylan* (or (getenv "DYLAN")
+                    (error "DYLAN environment variable not set")))
+(setq dylan-mode-dir (concat *dylan* "/workspaces/all/dylan-emacs-support"))
+(add-to-list 'load-path dylan-mode-dir)
+(load (concat dylan-mode-dir "/dylan.el"))
+(add-to-list 'auto-mode-alist '("\\.dylan\\'" . dylan-mode))
+(load (concat *dylan* "/workspaces/lsp/lsp-dylan/setup.el"))
 

@@ -1,7 +1,7 @@
 Where do we have sequence functions/utilities/whatever lying around?
 
-Is there something that will count occurrences of a value in a sequence?
-(Yes, deuce has `count(<sequence>)`.)
+Marking the ones I find potentially interesting with + and the ones I think
+should be dropped, or at least ignored by me, with -.
 
 *  dylan library
    *  `<sequence>`
@@ -34,16 +34,16 @@ Is there something that will count occurrences of a value in a sequence?
       *  `aref`
       *  `aref-setter`
       *  `first`
-      *  `second`
-      *  `third`
       *  `first-setter`
+      *  `second`
       *  `second-setter`
+      *  `third`
       *  `third-setter`
       *  `last`
       *  `last-setter`
       *  `head`
-      *  `tail`
       *  `head-setter`
+      *  `tail`
       *  `tail-setter`
    *  Adding and Removing Elements
       *  `add`
@@ -276,3 +276,26 @@ Is there something that will count occurrences of a value in a sequence?
    *  `merge-hash-ids`
    *  `table`
    *  `<case-insensitive-string-table>`
+
+Discussion
+
+What we keep, or what we decide to "bless" as officially maintained, may depend
+on our individual outlooks about programming with collections. Obviously the
+`cl` library is modeled on Common Lisp's sequence facilities, but how much do
+we actually want to use lists in Dylan programs? My take is that while they're
+preferable for some applications, the first thing in my quiver is usually going
+to be `<stretchy-vector>` because of its flexibility, random-access
+performance, and ease of use. Sort of like Python sequences and Go slices.
+
+I'm looking for the sweet spot with maximum utility and minimal overlap in
+functionality.
+
+It's not always best to look at a function purely by itself and determine what
+parameters are necessary; the library should work together as a whole. For
+example, do we use start/end keywords everywhere or lightweight slices? Or can
+they both be used together in the same library to good effect?
+
+Performance is key. How do we get the best performance, taking into account the
+need to allow user-created collection classes and therefore mark some classes
+as `open`. Separately, would it be beneficial to keep everything in one
+`collections` library so that they can be compiled as a unit?

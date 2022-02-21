@@ -1,8 +1,9 @@
 cgay's sandbox
 ==============
 
-A place for me to store various play projects and notes.  The notes
-are below...
+A place for me to store various play projects and notes.
+
+Much of this has been moved to various Google Docs.
 
 .. contents::
 
@@ -27,6 +28,7 @@ are below...
    String Hacking
    Project Ideas
    Conditions
+   Chroma Lexer (syntax highlighting)
 
 
 Documentation
@@ -112,16 +114,6 @@ Dylan Language
 Open Dylan
 ==========
 
-What defines a 1.0 release?
----------------------------
-
-I think the main concentration should be on the Linux port.  It should
-be easy for anyone with the right tools installed to build OD on both
-Linux and Windows.
-
-Windows
-~~~~~~~
-
 * I love using registry projects because they seem to be much less
   broken than non-registry projects and they allow for easily hacking
   on OD itself.  The major drawback for me is that they don't seem to
@@ -132,82 +124,13 @@ Windows
   I'd be happy with one Big Red Switch that set the default
   compilation mode for everything.
 
-Linux
-~~~~~
-
-* All warnings should be displayed during compilation, even those of
-  sub-projects.  I don't care if this is done in the compiler or if
-  we provide a script that will display them.  (It would have to be
-  a bit smart about which sub-projects were actually used, I guess.)
-  This works in the IDE so I would imagine it's not a deep problem.
-
-* It should be possible to get a Dylan-level backtrace.  I'm not
-  talking about interactive debugging here, just the ability to
-  display a readable backtrace when an error is signalled.  e.g.,
-  Python's default behavior is to display a backtrace before it
-  exits if there's an unhandled exception.
-
 IDE
----
-
-* Increase the initial size of windows to reflect today's minimum
-  screen sizes.
-
-* Move the Debug options to a top-level tab in the Project window.  I
-  change these all the time when testing.
-
-* Combine the Build dialog and Warnings tab into a single tab called
-  Build.  They seem a natural fit and the larger screens these days
-  can easily accomodate the change.  Note that the two lines of text
-  in the current Build progress window can easily be combined into
-  one: <library-name>: <action>
-
-* Change win32-environment command-line parsing to use
-  commmand-line-parser.
-
-* Use config file instead of registry on Windows.  Housel says it
-  would be nice if it were pluggable so that you could use either one.
-  Just configs would be enough for me, but since registry is already
-  used it probably makes sense to be Windowsy on Windows.  Config files
-  could be used for testing on Windows.
-
-  I imagine adding a --config command-line option would be enough to
-  switch to the use of config files and ignore the registry.  This
-  would especially be useful for testing.
-
-  There would need to be a user config file (default
-  ~/.opendylan/opendylan.coil) and an auto-generated config for
-  settings that are changed via the IDE (e.g., ~/.opendylan/autogen.coil).
-  The user file would override options in the autogen file.
-
-  It would be nice to allow "--config none" to mean "don't load any
-  config".
-
-* Make it possible to sort the tree of definitions (alphabetically, by
-  definition type, by textual order) by right-clicking on a file in
-  the Project window.
-
-* Improvements to the "select buffers" menu: 
-
-    + Sort by most-recently-visited.  There should be a drop-down menu
-      to choose sorting method.  The choice should be remembered.
-
-    + Show/hide which buffers were loaded due to Edit Methods?  Or
-      buffers which are under the project's directory (as determined
-      by the shared file root)?  Or just an option to show those that
-      are part of any open project?  Or add a filter widget...this
-      might be the most general.
-
-    + An option to display as <dir>/<file> rather than <file> <dir>.
-      This can make it easier to find files if you know the directory.
-      They just line up better.  Could play around with showing only
-      the unique parts, or grouping them by directory...
+===
 
 * Show the filename in separator lines in composite buffers.
 
-* Make M-. work for "m(t1, t2, t3, ...)"  Even better, if it's not too
-  slow, right click on a name could put all known methods under a
-  submenu of Edit Methods, plus All.
+* Make M-. work for "m(t1, t2, t3, ...)"  Better, right click on a name could
+  put all known methods under a submenu of Edit Methods, plus All.
 
 * Integrate Testworks into the IDE.  Needs design.  10 seconds thought
   ideas:
@@ -232,51 +155,9 @@ IDE
       whether the visible methods have corresponding tests, and if so,
       what they are.
 
-* Export Test Suite Skeleton can generate invalid module specs.  The one it generated
-  for regular-expressions had a bad ')' in  ::
-
-      constant <invalid-regex> :: <object>);
-
-  which is defined as ::
-
-      defne constant <invalid-regex> = <illegal-regex>;
-      
-* Implement fast, Eclipse-style "resource search".  This would use the
-  compiler database, not be file search.  (Although file search could
-  be integrated into it as well, as in Eclipse.)  It could offer to
-  put all the found definitions into a composite buffer.
-
-* Modernize the VCS integration.  As a first pass support Subversion
-  and Git.  The way it's currently done looks a bit antiquated to me
-  although I haven't fully internalized it yet.
-
-  + There should be auto-detection of the VCS back-end based on
-    existence of .git or .svn directories.
-
-  + The Project Window should show the VC status of files and should
-    provide a way to commit/update/etc the entire project or selected
-    files.
-
-  + The Editor Window should show the revision number and status of
-    the current file, and should have options to commit/update/diff/etc.
-
-  + Give some thought to how we might support VC operations for
-    multiple open project (via the Main Window?)
-
-  + Provide some way to collect up commit comments incrementally (from
-    the editor, diff/merge facility, and of course from the commit UI).
-
-  + Provide integration with diff/merge tools like Meld rather than
-    reinventing the wheel.
 
 Libraries
 =========
-
-testworks
----------
-
-* Catch overflow errors when the profiling macro is called and re-run
-  the test without profiling.  Report the error.
 
 common-dylan
 ------------
@@ -418,66 +299,6 @@ system
     Exiting with return code -1
 
 
-koala
------
-
-* Should probably be using <internet-address>es instead of <string>s, at least
-  for the <listener> class.
-
-* Interesting discussion about URL query values:
-  http://lists.w3.org/Archives/Public/ietf-http-wg/2004JulSep/0009.html
-
-* Look at the Allegro web app package more.  (name?)  It has some nice ideas
-  about sessions and apps.
-
-
-file-system
------------
-
-* create-directory(parent, name) seriously?  Just pass a single pathname and
-  figure out the parent directory, yes?
-
-
-locators
---------
-
-* Rewrite the whole damned thing?  Man, I hate this library.  It seems
-  way overly complex to me.  Need to come up with a reasonable
-  alternate design, I guess.  I would probably get rid of directory
-  locators completely, since you generally don't know whether a
-  locator names a directory or file until you ask the file-system.  It
-  has to be sufficiently easy to use with strings wherever possible,
-  rather than (for example) having to create useless locator objects
-  just to merge them.  I think you basically need::
-
-    <locator>
-      <url>
-      <file>
-      
-
-* Renamings:
-
-    + <http-server> => <http-server-url>
-    + <ftp-server> => <ftp-server-url>
-    + <file-server> => <file-server-url>
-
-
-String Hacking
-==============
-
-* Various string conversion functions in common-dylan.
-
-* Specific functions I've wanted::
-
-    . slice(sequence, bpos, epos)
-    . slice!(...)
-    . slice!-setter(...)
-
-* Implement multi-line strings (""") in the compiler if it's not too
-  hairy.  Probably should write a DEP first, or in parallel.  See
-  conversation on Hackers list with subject "Better string constants".
-
-
 Project Ideas
 =============
 
@@ -561,44 +382,8 @@ Conditions
 
 
 
------------------------------------
 
-Proposal to rename <serious-condition> 
+Chroma Lexer (syntax highlighting)
+==================================
 
-Proposal:  Change the language by renaming <serious-condition> to <exception>. 
-
-Reasoning: 
-
-For reference, here are some DRM definitions: 
-
-<serious-condition>: The class of conditions that cannot be safely ignored. 
-<error>: The class of conditions that represent something invalid about the program. 
-
-(1) <serious-condition> is the normal class to inherit from for classes that represent exceptional conditions and that are not errors.  (Note the use of the word "exceptional" here, which seems natural in English.)  The name "<serious-condition>" is too wishy-washy and long-winded to be the default condition class to subclass or catch.  Chris Page also points out that it begs the question "How serious?"  Should we also have a <really-serious-condition>? 
-
-(2) "Exception" is common terminology for this type of condition in other languages so this makes Dylan slightly more accessible to programmers coming from those communities. 
-
-Implementation:
-
-This is a fairly straight-forward change.  The steps would be:
-
-(1) Rename <serious-condition> to <exception>.
-(2) Update all uses of <serious-condition> to use <exception> instead.
-(3) Update the DRM with an erratum noting the change.
-(4) Profit.
-
-I would prefer NOT to provide backward compatibility because the user base is tiny to non-existent.  Having backward compatibility leaves the door open to new code using the old class name.  That's just my preference though; I don't mind going the other route.  Perhaps there are bootstrap or other issues that I haven't thought of here though.
-
-Comments?
-
-
-Proposal to make <serious-condition> and <error> disjoint 
-Proposal: Make <error> be a subclass of <condition> instead of being a subclass of <serious-condition>.
-
-Reasoning:
-
-In many programs there are cases for which it is legitimate to use the "diaper pattern" (i.e., catch many or all exceptions).  For example in an application's top-level loop it may be preferable to catch <serious-condition> and offer the choice to continue rather than to exit the application.  Sometimes library code doesn't export a particular exception class so the client is left with no choice but to cast a wider net.
-
-
-
-.
+``go test -test.run 'TestLexers/Dylan'``

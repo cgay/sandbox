@@ -119,6 +119,7 @@ export PATH=${HOME}/bin:/usr/local/bin:/usr/bin:/bin
 # Pass $TERM (usually xterm-256color) through to screen so that colors work
 # better. (Primarily I was seeing some RST headers being black on black.)
 alias screen='screen -e^jj -T $TERM'
+alias tmux='tmux -2'            # force 256 colors
 
 ### Emacs
 
@@ -138,11 +139,12 @@ export EDITOR=emacs
 
 export DYLAN=${HOME}/dylan
 export PATH=${DYLAN}/opendylan/bin:${DYLAN}/bin:${PATH}
+export ALL=${DYLAN}/workspaces/all
+export DT=${DYLAN}/workspaces/dt
+export LSP=${DYLAN}/workspaces/lsp
 export OD=${DYLAN}/workspaces/od/opendylan
 export PB=${DYLAN}/workspaces/pb
 export PLAY=${DYLAN}/workspaces/playground
-export DT=${DYLAN}/workspaces/dt
-export ALL=${DYLAN}/workspaces/all
 export PYTHONPATH=${OD}/documentation/sphinx-extensions
 
 # Temp fix for regular-expressions library hang problem.
@@ -152,7 +154,21 @@ export LD_PRELOAD=/home/cgay/libunwind/install/lib/libunwind.so.8
 # Confuses emacs PWD tracking. See dirtrack stuff in .emacs.
 # Also use M-x dirs to fix.
 function dw () {
-    cd ${DYLAN}/workspaces/${1}
+    local d=${DYLAN}
+    if [[ -z "$d" ]]; then
+        d=${HOME}/dylan
+    fi
+    cd ${d}/workspaces/${1}
+}
+
+function lsp_env () {
+    export OPEN_DYLAN_USER_REGISTRIES=${LSP}/lsp-dylan/registry:${OD}/sources/registry
+    export OPEN_DYLAN_RELEASE_INSTALL=${DYLAN}/opendylan
+}
+
+function lsp_env_dt () {
+    export OPEN_DYLAN_USER_REGISTRIES=${DT}/registry:${OD}/sources/registry
+    export OPEN_DYLAN_RELEASE_INSTALL=${DYLAN}/opendylan
 }
 
 ### Shell prompt
