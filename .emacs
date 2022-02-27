@@ -27,7 +27,9 @@
  '(go-fontify-function-calls nil)
  '(go-fontify-variables t)
  '(indent-tabs-mode nil)
- '(package-selected-packages (quote (hover lsp-mode protobuf-mode go-mode magit slime)))
+ '(package-selected-packages
+   (quote
+    (yaml-mode hover lsp-mode protobuf-mode go-mode magit slime)))
  '(safe-local-variable-values (quote ((Syntax . Common-Lisp))))
  '(show-paren-mode nil)
  '(show-trailing-whitespace t)

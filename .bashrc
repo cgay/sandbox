@@ -162,12 +162,7 @@ function dw () {
 }
 
 function lsp_env () {
-    export OPEN_DYLAN_USER_REGISTRIES=${LSP}/lsp-dylan/registry:${OD}/sources/registry
-    export OPEN_DYLAN_RELEASE_INSTALL=${DYLAN}/opendylan
-}
-
-function lsp_env_dt () {
-    export OPEN_DYLAN_USER_REGISTRIES=${DT}/registry:${OD}/sources/registry
+    export OPEN_DYLAN_USER_REGISTRIES=${OD}/sources/registry
     export OPEN_DYLAN_RELEASE_INSTALL=${DYLAN}/opendylan
 }
 
