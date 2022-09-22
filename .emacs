@@ -1,4 +1,3 @@
-
 ;; C-c c to compile
 (global-set-key [?\C-c?c] 'compile)
 
@@ -18,7 +17,7 @@
  '(buffers-menu-max-size 30)
  '(buffers-menu-show-directories t)
  '(column-number-mode t)
- '(custom-enabled-themes nil)
+ '(custom-enabled-themes (quote (wombat)))
  '(debug-on-error t)
  '(dylan-continuation-indent 2)
  '(emacs-lisp-docstring-fill-column 79)
@@ -41,6 +40,7 @@
  ;; If there is more than one, they won't work right.
  )
 
+
 ;; load emacs 24's package system. Add MELPA repository.
 (progn
   (require 'package)
@@ -58,8 +58,10 @@
   ;;              '("melpa" . "https://melpa.org/packages/"))
   (package-initialize))
 
+
 ;;; This can't possibly be the right way to load lsp-mode, right?
-(load-file "~/.emacs.d/elpa/lsp-mode-8.0.0/lsp-mode.el")
+(unless (equal system-type 'windows-nt)
+  (load-file "~/.emacs.d/elpa/lsp-mode-8.0.0/lsp-mode.el"))
 
 (put 'narrow-to-region 'disabled nil)
 
@@ -80,23 +82,22 @@
                 t))                     ; multi-line match?
 
 
-
 ;;; SLIME / SWANK
 
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/elpa-src/slime-2.23")
-(require 'slime)
-(slime-setup)
-(load (expand-file-name "~/quicklisp/slime-helper.el"))
-(setq inferior-lisp-program "/usr/local/bin/sbcl")
-(global-set-key (kbd "C-c l") 'slime-repl)
+(unless (equal system-type 'windows-nt)
+  (add-to-list 'load-path "/usr/share/emacs/site-lisp/elpa-src/slime-2.23")
+  (require 'slime)
+  (slime-setup)
+  (load (expand-file-name "~/quicklisp/slime-helper.el"))
+  (setq inferior-lisp-program "/usr/local/bin/sbcl")
+  (global-set-key (kbd "C-c l") 'slime-repl))
 
 ;;; Dylan
 
 (defvar *dylan* (or (getenv "DYLAN")
                     (error "DYLAN environment variable not set")))
-(setq dylan-mode-dir (concat *dylan* "/workspaces/all/dylan-emacs-support"))
+(setq dylan-mode-dir (concat *dylan* "/pkg/dylan-emacs-support/0.1.0/src"))
 (add-to-list 'load-path dylan-mode-dir)
 (load (concat dylan-mode-dir "/dylan.el"))
 (add-to-list 'auto-mode-alist '("\\.dylan\\'" . dylan-mode))
-(load (concat *dylan* "/workspaces/lsp/lsp-dylan/setup.el"))
-
+;;(load (concat *dylan* "/workspaces/lsp/lsp-dylan/setup.el"))
