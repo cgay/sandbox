@@ -118,7 +118,7 @@ export PATH=${HOME}/bin:/usr/local/bin:/usr/bin:/bin
 
 # Pass $TERM (usually xterm-256color) through to screen so that colors work
 # better. (Primarily I was seeing some RST headers being black on black.)
-alias screen='screen -e^jj -T $TERM'
+alias start_screen='screen -e^jj -T screen-256color'
 alias tmux='tmux -2'            # force 256 colors
 
 ### Emacs
@@ -139,13 +139,16 @@ export EDITOR=emacs
 
 export DYLAN=${HOME}/dylan
 export PATH=${DYLAN}/opendylan/bin:${DYLAN}/bin:${PATH}
-export ALL=${DYLAN}/workspaces/all
-export DT=${DYLAN}/workspaces/dt
-export LSP=${DYLAN}/workspaces/lsp
-export OD=${DYLAN}/workspaces/od/opendylan
-export PB=${DYLAN}/workspaces/pb
-export PLAY=${DYLAN}/workspaces/playground
+export DW=${DYLAN}/workspaces
 export PYTHONPATH=${OD}/documentation/sphinx-extensions
+
+# Specific workspaces
+export ALL=${DW}/all
+export DT=${DW}/dt/dylan-tool
+export LSP=${DW}/lsp/lsp-dylan
+export OD=${DW}/od/opendylan
+export PB=${DW}/pb/protocol-buffers
+export PLAY=${DW}/playground/dylan-playground
 
 # Temp fix for regular-expressions library hang problem.
 export LD_PRELOAD=/home/cgay/libunwind/install/lib/libunwind.so.8
@@ -205,4 +208,4 @@ export GOPATH=${HOME}/go
 
 ### Lisp
 
-export PATH=${HOME}/google/protobuf-install-dir/bin:$PATH
+#export PATH=${HOME}/google/protobuf-install-dir/bin:$PATH

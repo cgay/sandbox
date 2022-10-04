@@ -27,9 +27,12 @@
  '(go-fontify-variables t)
  '(indent-tabs-mode nil)
  '(package-selected-packages
-   (quote
-    (yaml-mode hover lsp-mode protobuf-mode go-mode magit slime)))
- '(safe-local-variable-values (quote ((Syntax . Common-Lisp))))
+   '(yaml-mode hover lsp-mode protobuf-mode go-mode magit slime))
+ '(safe-local-variable-values
+   '((Base . 10)
+     (Package . CL-PPCRE)
+     (Syntax . COMMON-LISP)
+     (Syntax . Common-Lisp)))
  '(show-paren-mode nil)
  '(show-trailing-whitespace t)
  '(tool-bar-mode nil))
@@ -85,10 +88,10 @@
 ;;; SLIME / SWANK
 
 (unless (equal system-type 'windows-nt)
-  (add-to-list 'load-path "/usr/share/emacs/site-lisp/elpa-src/slime-2.23")
-  (require 'slime)
+  ;;(add-to-list 'load-path "/usr/share/emacs/site-lisp/elpa-src/slime-2.23")
+  (require 'slime "~/.emacs.d/elpa/slime-2.27/slime.el")
   (slime-setup)
-  (load (expand-file-name "~/quicklisp/slime-helper.el"))
+  ;;(load (expand-file-name "~/quicklisp/slime-helper.el"))
   (setq inferior-lisp-program "/usr/local/bin/sbcl")
   (global-set-key (kbd "C-c l") 'slime-repl))
 
