@@ -138,17 +138,24 @@ export EDITOR=emacs
 ### Dylan
 
 export DYLAN=${HOME}/dylan
-export PATH=${DYLAN}/opendylan/bin:${DYLAN}/bin:${PATH}
+export PATH=${DYLAN}/bin:${PATH}:${DYLAN}/opendylan/bin
 export DW=${DYLAN}/workspaces
 export PYTHONPATH=${OD}/documentation/sphinx-extensions
 
+# I don't generally like to set any of the OPEN_DYLAN_* variables, but I think
+# this is innocuous enough. My current understanding: It's useful when using
+# LSP because it causes the compiler to create <registry-project>s instead of
+# <binary-project>s. See https://github.com/dylan-lang/lsp-dylan/issues/23 for
+# background. I'm not 100% sure I've understood the problem correctly.
+export OPEN_DYLAN_USER_REGISTRIES=${OD}/sources/registry
+
 # Specific workspaces
 export ALL=${DW}/all
-export DT=${DW}/dt/dylan-tool
-export LSP=${DW}/lsp/lsp-dylan
+export DT=${DW}/dylan-tool
+export LSP=${DW}/lsp-dylan
 export OD=${DW}/od/opendylan
-export PB=${DW}/pb/protocol-buffers
-export PLAY=${DW}/playground/dylan-playground
+export PB=${DW}/protocol-buffers
+export DP=${DW}/dylan-playground
 
 # Temp fix for regular-expressions library hang problem.
 export LD_PRELOAD=/home/cgay/libunwind/install/lib/libunwind.so.8
@@ -162,11 +169,6 @@ function dw () {
         d=${HOME}/dylan
     fi
     cd ${d}/workspaces/${1}
-}
-
-function lsp_env () {
-    export OPEN_DYLAN_USER_REGISTRIES=${OD}/sources/registry
-    export OPEN_DYLAN_RELEASE_INSTALL=${DYLAN}/opendylan
 }
 
 ### Shell prompt
@@ -199,6 +201,7 @@ find_git_status() {
 
 PROMPT_COMMAND="bash_prompt_cmd; $PROMPT_COMMAND"
 
+alias git_gc='git branch --merged | egrep -v "(^\*|master|main|dev)" | xargs git branch -d'
 
 ### Go
 

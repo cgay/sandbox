@@ -1,3 +1,9 @@
+;; Use f7 to generate the Super key on tty emacs.
+(global-set-key [f7] nil)
+(global-set-key [f8] nil)
+(define-key function-key-map [(f7)] 'event-apply-super-modifier)
+(define-key function-key-map [(f8)] 'event-apply-hyper-modifier)
+
 ;; C-c c to compile
 (global-set-key [?\C-c?c] 'compile)
 
@@ -17,7 +23,7 @@
  '(buffers-menu-max-size 30)
  '(buffers-menu-show-directories t)
  '(column-number-mode t)
- '(custom-enabled-themes (quote (wombat)))
+ '(custom-enabled-themes '(wombat))
  '(debug-on-error t)
  '(dylan-continuation-indent 2)
  '(emacs-lisp-docstring-fill-column 79)
@@ -26,8 +32,14 @@
  '(go-fontify-function-calls nil)
  '(go-fontify-variables t)
  '(indent-tabs-mode nil)
+ '(lsp-diagnostics-attributes
+   '((unnecessary :foreground "gray")
+     (deprecated :strike-through t)))
+ '(lsp-diagnostics-provider :auto)
+ '(lsp-dylan-extra-server-flags '("--debug-opendylan")) ; "--debug-server"
+ '(lsp-server-trace "messages")
  '(package-selected-packages
-   '(yaml-mode hover lsp-mode protobuf-mode go-mode magit slime))
+   '(eglot yaml-mode hover lsp-mode protobuf-mode go-mode magit slime))
  '(safe-local-variable-values
    '((Base . 10)
      (Package . CL-PPCRE)
@@ -61,10 +73,6 @@
   ;;              '("melpa" . "https://melpa.org/packages/"))
   (package-initialize))
 
-
-;;; This can't possibly be the right way to load lsp-mode, right?
-(unless (equal system-type 'windows-nt)
-  (load-file "~/.emacs.d/elpa/lsp-mode-8.0.0/lsp-mode.el"))
 
 (put 'narrow-to-region 'disabled nil)
 
@@ -103,4 +111,16 @@
 (add-to-list 'load-path dylan-mode-dir)
 (load (concat dylan-mode-dir "/dylan.el"))
 (add-to-list 'auto-mode-alist '("\\.dylan\\'" . dylan-mode))
-;;(load (concat *dylan* "/workspaces/lsp/lsp-dylan/setup.el"))
+
+;;; This can't possibly be the right way to load lsp-mode, right?
+(unless (equal system-type 'windows-nt)
+  (load-file "~/.emacs.d/elpa/lsp-mode-8.0.0/lsp-mode.el")
+  ;; From https://emacs-lsp.github.io/lsp-mode/page/faq/. I'm not sure if this
+  ;; is necessary, but it seems like it may be useful so I'm holding onto it.
+  '(advice-add 'lsp :before
+               (lambda (&rest _args)
+                 (setf (lsp-session-server-id->folders (lsp-session))
+                       (ht)))))
+(load (concat *dylan* "/workspaces/lsp-dylan/lsp-dylan.el"))
+
+(add-hook 'dylan-mode-hook 'lsp)

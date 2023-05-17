@@ -11,9 +11,12 @@
 	lll = log --oneline -40
         rom = pull --rebase origin master
         romain = pull --rebase origin main
+	show-commit = diff-tree --name-status -r
 [credential]
 	helper = store
 [init]
 	defaultBranch = main
 [pull]
 	rebase = true
+[filter "versioner"]
+	smudge = expand-version.sh
