@@ -9,8 +9,8 @@
         sb = status --short --branch
 	ll = log --oneline -20
 	lll = log --oneline -40
-        rom = pull --rebase origin master
-        romain = pull --rebase origin main
+        rom = pull --tags --rebase origin master
+        romain = pull --tags --rebase origin main
 	show-commit = diff-tree --name-status -r
 [credential]
 	helper = store
