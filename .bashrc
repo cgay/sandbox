@@ -30,19 +30,11 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 #[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
 
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
 #force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
@@ -57,19 +49,19 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1='\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
+    xterm*|rxvt*)
+        PS1="\[\e]0;\u@\h: \w\a\]$PS1"
+        ;;
+    *)
+        ;;
 esac
 
 # enable color support of ls and also add handy aliases
@@ -87,10 +79,6 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
-alias ll='ls -l'
-#alias la='ls -A'
-#alias l='ls -CF'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -114,6 +102,8 @@ fi
 
 ### Basics
 
+alias ll='ls -al --color'
+
 export PATH=${HOME}/bin:/usr/local/bin:/usr/bin:/bin
 
 # Pass $TERM (usually xterm-256color) through to screen so that colors work
@@ -129,18 +119,23 @@ if [[ -n "${INSIDE_EMACS}" ]]; then
     export TERM=emacs           # colorization works, e.g., for git diff
 fi
 
-# I'm always inside screen anyway and emacsclient can cause problems with
-# 'git rebase -i' which I'm too lazy to debug.
-alias emacs='PAGER=/bin/cat emacs -nw'
+
+if [[ "$(hostname)" == "Raven.local" ]]; then
+    alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
+else
+    # This is for my Linode Debian machine, where I'm always inside screen and
+    # emacsclient can cause problems with 'git rebase -i' which I'm too lazy to
+    # debug.
+    alias emacs='PAGER=/bin/cat emacs -nw'
+fi
 export EDITOR=emacs
 
 
 ### Dylan
 
 export DYLAN=${HOME}/dylan
-export PATH=${DYLAN}/bin:${PATH}:${DYLAN}/opendylan/bin
+export PATH=${DYLAN}/bin:${DYLAN}/opendylan/bin:${PATH}
 export DW=${DYLAN}/workspaces
-export PYTHONPATH=${OD}/documentation/sphinx-extensions
 
 # I don't generally like to set any of the OPEN_DYLAN_* variables, but I think
 # this is innocuous enough. My current understanding: It's useful when using
@@ -150,26 +145,18 @@ export PYTHONPATH=${OD}/documentation/sphinx-extensions
 export OPEN_DYLAN_USER_REGISTRIES=${OD}/sources/registry
 
 # Specific workspaces
-export ALL=${DW}/all
 export DT=${DW}/dylan-tool
 export LSP=${DW}/lsp-dylan
-export OD=${DW}/od/opendylan
+if [[ "$(hostname)" == "Raven.local" ]]; then
+    export OD=${DW}/opendylan
+else
+    export OD=${DW}/od/opendylan
+fi
 export PB=${DW}/protocol-buffers
 export DP=${DW}/dylan-playground
 
 # Temp fix for regular-expressions library hang problem.
-export LD_PRELOAD=/home/cgay/libunwind/install/lib/libunwind.so.8
-
-# Select a Dylan workspace, based on my naming scheme.
-# Confuses emacs PWD tracking. See dirtrack stuff in .emacs.
-# Also use M-x dirs to fix.
-function dw () {
-    local d=${DYLAN}
-    if [[ -z "$d" ]]; then
-        d=${HOME}/dylan
-    fi
-    cd ${d}/workspaces/${1}
-}
+#export LD_PRELOAD=/home/cgay/libunwind/install/lib/libunwind.so.8
 
 ### Shell prompt
 
