@@ -21,7 +21,7 @@
  '(buffers-menu-max-size 30)
  '(buffers-menu-show-directories t)
  '(column-number-mode t)
- '(custom-enabled-themes '(wombat))
+ '(custom-enabled-themes '(leuven-dark))
  '(debug-on-error t)
  '(dylan-continuation-indent 2)
  '(emacs-lisp-docstring-fill-column 79)
