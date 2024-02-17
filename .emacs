@@ -1,14 +1,12 @@
 ;; Use f7 to generate the Super key on tty emacs.
-(global-set-key [f7] nil)
-(global-set-key [f8] nil)
-(define-key function-key-map [(f7)] 'event-apply-super-modifier)
-(define-key function-key-map [(f8)] 'event-apply-hyper-modifier)
+(keymap-global-set "<f7>" nil)
+(keymap-global-set "<f8>" nil)
+(keymap-set function-key-map "<f7>" 'event-apply-super-modifier)
+(keymap-set function-key-map "<f8>" 'event-apply-hyper-modifier)
 
-;; C-c c to compile
-(global-set-key [?\C-c?c] 'compile)
-
-;; C-c s to get a shell
-(global-set-key [?\C-c?s] 'shell)
+(keymap-global-set "C-c c" 'compile)    ; C-c c to compile
+(keymap-global-set "C-c s" 'shell)      ; C-c s to get a shell
+(keymap-global-set "C-x C-b" 'ibuffer)  ; ibuffer instead of list-buffers
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -104,7 +102,7 @@
     (slime-setup)
     ;;(load (expand-file-name "~/quicklisp/slime-helper.el"))
     (setq inferior-lisp-program "/usr/local/bin/sbcl")
-    (global-set-key (kbd "C-c l") 'slime-repl))
+    (keymap-global-set "C-c l" 'slime-repl))
 
 ;;; Dylan
 
@@ -129,3 +127,7 @@
   (add-hook 'dylan-mode-hook 'lsp)
 
 )                                       ; temp
+
+;; Globally enable winner mode, which binds C-c <Left> to "revert to previous
+;; window configuration" and C-c <Right> to "revert the revert".
+(winner-mode 1)
