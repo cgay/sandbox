@@ -100,16 +100,22 @@ if ! shopt -oq posix; then
   fi
 fi
 
+
 ### Basics
 
 alias ll='ls -al --color'
 
 export PATH=${HOME}/bin:/usr/local/bin:/usr/bin:/bin
 
+if [[ "$(hostname)" == "Raven.local" ]]; then
+    export PATH=/opt/homebrew/bin:${PATH}
+fi
+
 # Pass $TERM (usually xterm-256color) through to screen so that colors work
 # better. (Primarily I was seeing some RST headers being black on black.)
 alias start_screen='screen -e^jj -T screen-256color'
 alias tmux='tmux -2'            # force 256 colors
+
 
 ### Emacs
 
