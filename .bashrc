@@ -105,9 +105,12 @@ fi
 
 alias ll='ls -al --color'
 
-export PATH=${HOME}/bin:/usr/local/bin:/usr/bin:/bin
+export PATH=/usr/local/bin:/usr/bin:/bin:${HOME}/bin:${HOME}/Library/Python/3.9/bin/
 
 if [[ "$(hostname)" == "Raven.local" ]]; then
+    # Note that there are two versions of Homebrew installed: arm64 binaries
+    # are stored in /opt/homebrew and x86_64 binaries are stored in
+    # /usr/local. See the Dylan section later in this file.
     export PATH=/opt/homebrew/bin:${PATH}
 fi
 
@@ -140,15 +143,22 @@ export EDITOR=emacs
 ### Dylan
 
 export DYLAN=${HOME}/dylan
-export PATH=${DYLAN}/bin:${DYLAN}/opendylan/bin:${PATH}
+export PATH=${PATH}:${DYLAN}/bin:${DYLAN}/opendylan/bin
 export DW=${DYLAN}/workspaces
 
-# I don't generally like to set any of the OPEN_DYLAN_* variables, but I think
-# this is innocuous enough. My current understanding: It's useful when using
-# LSP because it causes the compiler to create <registry-project>s instead of
-# <binary-project>s. See https://github.com/dylan-lang/lsp-dylan/issues/23 for
-# background. I'm not 100% sure I've understood the problem correctly.
-export OPEN_DYLAN_USER_REGISTRIES=${OD}/sources/registry
+if [[ "$(hostname)" == "Raven.local" ]]; then
+    # On Raven (macOS) these are necessary to point to the x86_64 version of
+    # Homebrew, which in turn is necessary until Open Dylan supports
+    # amd64-Darwin natively. The x86_64 version installs to /usr/local and the
+    # amd64 version installs to /opt/homebrew.
+    export LIBRARY_PATH=/usr/local/lib
+    export CPATH=/usr/local/include
+
+    # Generally I should be using the native Homebrew but occasionally I may
+    # need to install something for x86_64 (Dylan) so keep an alias.
+    alias brew=/opt/homebrew/bin/brew
+    alias x86_64_brew=/usr/local/Homebrew/bin/brew
+fi
 
 # Specific workspaces
 export DT=${DW}/dylan-tool
@@ -204,4 +214,4 @@ export GOPATH=${HOME}/go
 
 ### Lisp
 
-#export PATH=${HOME}/google/protobuf-install-dir/bin:$PATH
+#export PATH=${PATH}:${HOME}/google/protobuf-install-dir/bin
