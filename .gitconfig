@@ -3,12 +3,14 @@
         name = Carl Gay
 [alias]
         amend = commit -a --amend --no-edit
-        s = status
+        s = status --ignored
         b = branch
         co = checkout
         sb = status --short --branch
-	ll = log --oneline -20
-	lll = log --oneline -40
+        # Log like --oneline but with author name.
+        # color hash (12 chars max)author ref-names subject -lines
+	ll  = log --format='%C(auto)%h %<(12,trunc)%an%d %s' -20
+	lll = log --format='%C(auto)%h %<(12,trunc)%an%d %s' -40
         rom = pull --tags --rebase origin master
         romain = pull --tags --rebase origin main
 	show-commit = diff-tree --name-status -r
