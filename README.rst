@@ -1,202 +1,13 @@
 cgay's sandbox
 ==============
 
-A place for me to store various play projects and notes.
+Just a bunch of notes.
 
 Much of this has been moved to various Google Docs.
-
-.. contents::
-
-.. Documentation
-   Usability
-   Reading List
-   Dylan Language
-   Open Dylan
-     What defines a 1.0 release?
-       Windows
-       Linux
-     IDE
-   Libraries
-     testworks
-     common-dylan
-     collections
-     regular-expressions
-     system
-     koala
-     file-system
-     locators
-   String Hacking
-   Project Ideas
-   Conditions
-   Chroma Lexer (syntax highlighting)
-
-
-Documentation
-=============
-
-* There's no link from inside the Library Reference back to the main
-  documentation page or to opendylan.org.  Can we make the website
-  header appear on the doc pages?
-
-* Revamp the FAQ.  It's so random and negative.  Look at eiffel.com FAQ
-  for examples.
-
-  It can be recovered from
-  https://github.com/cgay/dylan-wiki-data/blob/master/pages/main/FAQ/FAQ
-  and everything relating to GD should be removed.  Just use a single
-  page.
-
-  Questions to add:
-
-  Q: How do I change the way my object prints?
-  A: use io; use print; use format; override print-message and print-object
-
-* https://en.wikipedia.org/wiki/Dylan_(programming_language) needs a
-  lot of love.
-
-
-Usability
-=========
-
-* Single file libraries.  Implement DEP 6.  (I've since done an about
-  face on DEP 6.  I think it would be best to define the library and
-  modules in the normal way, but in the same source file.)
-
-* Improved scripting support, including ``#!/usr/bin/dylan``.
-
-* Package it up for various platforms.  apt, brew, whatever.
-
-
-Reading List 
-============
-
-* Scala collections API (Bruce Mitchener recommendation)
-* trunk/doc/opendylan design notes
-
-
-Dylan Language
-==============
-
-* What's the reasoning behind not having format-string and
-  format-arguments slots in <error>, but rather putting them in
-  <simple-error>?  This is a wart on the language.  You probably
-  don't want to risk the format arguments not having dynamic extent
-  anyway, most of the time.  (See comment in element-range-error.)  I
-  think it's an optimization to prevent having to do the formatting
-  unless the error is actually signalled.
-
-  Note that in many cases OD does embed collections into errors when
-  it doesn't use element-range-error.  This should be fixed and the
-  errors messages should at least include the collection type and
-  size.
-
-* Why is there no equivalent to Python's __repr__?  (See previous
-  item.)
-
-* How do you create Unicode string constants if they only contain
-  characters that can be expressed in a <byte-string>?  e.g., in
-  Python u"foo".  Does "\<666>" create a unicode string or a byte
-  string?  Is this even useful?  How about #u"..."?
-
-* For writing code with regular expressions in it, Python's r"..."
-  syntax is very nice.  What about adding something similar to Dylan?
-  e.g., #r"..." or #/.../
-
-* Better multi-line string support.  Anything that requires a lot of
-  escaping is a non-starter because it makes it extremely difficult to
-  edit the string in a major way.  Python's """ is really good because
-  it handles that case well, and I prefer it to what I just found in
-  C++, Lua, Javascript, or Ruby.
-
-* Why are set operations (union, intersection) defined on <sequence>
-  instead of <collection> or <set>?
-
-Open Dylan
-==========
-
-* I love using registry projects because they seem to be much less
-  broken than non-registry projects and they allow for easily hacking
-  on OD itself.  The major drawback for me is that they don't seem to
-  support loose/development mode very well.  (Do some experiments to
-  figure out exactly what DOES happen...I've been working around it
-  for so long I can't quite remember.)
-
-  I'd be happy with one Big Red Switch that set the default
-  compilation mode for everything.
-
-IDE
-===
-
-* Show the filename in separator lines in composite buffers.
-
-* Make M-. work for "m(t1, t2, t3, ...)"  Better, right click on a name could
-  put all known methods under a submenu of Edit Methods, plus All.
-
-* Integrate Testworks into the IDE.  Needs design.  10 seconds thought
-  ideas:
-
-    + Add a test-library keyword to the LID file. 
-
-    + Project -> Run Test Suite...  (use good default locations for tests) 
-
-    + Store test results in standard locations. 
-
-    + Display results in a new project window tab and have a button to
-      "make them canonical".
-
-    + Select arbirtrary tests and/or suites to re-run. 
-
-    + I really, really want hierarchical suite and test names for this. 
-
-    + Needs to support external resources, e.g., servers.  This can be
-      done via a --config argument.
-
-    + Integrate with the Test Specification to indicate in Deuce
-      whether the visible methods have corresponding tests, and if so,
-      what they are.
 
 
 Libraries
 =========
-
-common-dylan
-------------
-
-* Has float-to-string but no string-to-float.
-  Has number-to-string but no string-to-number.
-
-* What's the reasoning behind the 'skip' parameter to some sequence functions,
-  like 'position'?  It seems like it would be less efficient to use than
-  'start' and 'end' parameters since the implementation would have to start
-  from the beginning each time.  I don't like it being a mandatory keyword in
-  the 'position' generic function.  (Other functions that have it:
-  find-element, find-value, find-key.)  Note that find-key(..., skip: ...)
-  is only used twice is all of Open Dylan.
-
-  subsequence-position uses 'count', but it really means 'skip'.  Need to do
-  an exhaustive review of all the sequence functions.
-
-* find-key has a 'failure' keyword argument which it seems should be
-  called 'default' or at least 'on-failure'.  Want::
-
-    find-key(seq, fn, start: m, end: n, default: d)
-
-* Review other collection functions that might use start/end parameters.
-
-* Look at Factor as an example:
-  http://docs.factorcode.org/content/article-sequences.html
-
-* abeaumont points out that it can be more readable to use sequence
-  functions that copy rather than start:/end:.  Agree, but it conses.
-  Can have both by simply using slice() liberally.
-
-* Have both slice(seq, m, n) and subseq(seq, m, n) ?  The former has
-  sloppy semantics and the latter has strict?
-
-* Review split() signature.  I think this would be better::
-
-    split(seq, sep, parts: n, start: s, end: e)
-
 
 collections
 -----------
@@ -248,55 +59,6 @@ collections
   I just found (what I think is) a bug in user-registry-path due to
   this behavior.  How often does one *not care* where an element will
   be added?
-
-
-regular-expressions
--------------------
-
-* Mainly is just missing features now.  First step is probably to
-  implement the verbose: and multi-line: parameters to compile-regex.
-
-
-system
-------
-
-* Add a #"author-id" file property.  Besides being generally useful,
-  currently if there's an error resolving the author name we're left
-  with nothing at all.  Use this in Koala's directory listing.  Also,
-  document the new attribute and consider removing the file-properties
-  function.
-
-* Better temp file support
-
-* Export both OS-specific and generic modules.  The OS-specific
-  modules would use the OS-specific names.  e.g., getpid vs
-  current-process-id.  Then for calls that only exist on a certain
-  platform it will be natural to use the OS-specific name instead of
-  inventing a new one.  Also if you know your code only works on Linux
-  it's more natural to call getpid anyway.
-
-* run-application
-
-  + When the exe file doesn't exist, the error is "create process
-    failed: The system cannot find the file specified."  It should say
-    what the file was.
-
-  + I would like a simpler API than this.  The irregular number of
-    return values is strange, and often one wants something as simple
-    as::
-
-      let (exit-code, stdout, stderr) = run-program("whoami");
-
-    As for a complete API, I like the way subprocess.Popen works.
-
-* Better error messages in io/*-file-accessor.dylan::
-
-    dylan-compiler -build code/coil.lid
-    ...
-    Opened project coil (/Users/cgay/dylan/src/coil/code/coil.hdp)
-
-    Internal error: read: Is a directory
-    Exiting with return code -1
 
 
 Project Ideas
@@ -351,7 +113,7 @@ Project Ideas
   dispatch on the enum constant.  The elements can be stored in class
   slots.
 
-* Fix shootout code and update the web site. 
+* Fix shootout code and update the web site.
 
 * Benchmarks -- IO performance seems to be really bad.  See the
   count-words benchmark.  Even some very basic benchmarks could
