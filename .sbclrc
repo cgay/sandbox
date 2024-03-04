@@ -1,0 +1,16 @@
+;;; -*- Mode: lisp -*-
+
+;;; The following lines added by ql:add-to-init-file:
+#-quicklisp
+(let ((quicklisp-init (merge-pathnames "lisp/quicklisp/setup.lisp"
+                                       (user-homedir-pathname))))
+  (when (probe-file quicklisp-init)
+    (load quicklisp-init)))
+
+;;; Tell SBCL that the sources are in ~/lisp/sbcl, my git checkout. This should
+;;; normally be the right place as I plan to usually be running the version I
+;;; built myself with `sh make.sh`.  It only takes a minute to build, woot!
+(sb-ext:set-sbcl-source-location
+ (merge-pathnames (make-pathname :directory '(:relative "lisp" "sbcl")
+                                 :defaults #1=(user-homedir-pathname))
+                  #1#))

@@ -15,6 +15,9 @@ HISTCONTROL=ignoreboth
 # append to the history file, don't overwrite it
 shopt -s histappend
 
+# Oh. My. God. Bash "smart" completion is teh worts. Stop "helping" me.
+shopt -u progcomp
+
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000
 HISTFILESIZE=2000
@@ -213,5 +216,7 @@ export GOPATH=${HOME}/go
 
 
 ### Lisp
+
+export PATH=${HOME}/lisp/sbcl-current/bin:${PATH}
 
 #export PATH=${PATH}:${HOME}/google/protobuf-install-dir/bin
