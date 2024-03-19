@@ -4,7 +4,7 @@
 [alias]
         amend = commit -a --amend --no-edit
         s = status --ignored
-        b = branch
+        b = branch -vv
         co = checkout
         sb = status --short --branch
         # Log like --oneline but with author name.
