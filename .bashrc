@@ -177,6 +177,11 @@ export DP=${DW}/dylan-playground
 # Temp fix for regular-expressions library hang problem.
 #export LD_PRELOAD=/home/cgay/libunwind/install/lib/libunwind.so.8
 
+# For dylan-lsp-server we want it to always use the git checkout instead of the
+# sources in the OD installation directory.
+export OPEN_DYLAN_USER_REGISTRIES=${OD}/sources/registry
+
+
 ### Shell prompt
 
 bash_prompt_cmd() {

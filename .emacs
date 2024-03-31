@@ -49,7 +49,7 @@
  '(lsp-dylan-extra-server-flags '("--debug-opendylan"))
  '(lsp-server-trace "messages")
  '(package-selected-packages
-   '(typescript-mode slime markdown-mode marginalia eglot yaml-mode hover lsp-mode protobuf-mode go-mode magit))
+   '(lsp-treemacs flycheck lsp-ui typescript-mode slime markdown-mode marginalia eglot yaml-mode hover lsp-mode protobuf-mode go-mode magit))
  '(safe-local-variable-values
    '((Base . 10)
      (Package . CL-PPCRE)
@@ -73,7 +73,6 @@
   ;; https://emacs.stackexchange.com/questions/61997/how-do-i-fix-incomprehensible-buffer-error-when-running-list-packages
   (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
-  ;; This adds melpa-stable to the standard gnu and nongnu repositories.
   (setq package-archives
         '(("melpa" . "https://melpa.org/packages/")
           ;;("melpa-stable" . "https://stable.melpa.org/packages/")
@@ -128,7 +127,15 @@
 ;; https://emacs-lsp.github.io/lsp-mode/page/installation/ has links to various
 ;; fancy UI add-ons for lsp-mode too. Might be worth a look later.
 (require 'lsp-mode)
+(use-package lsp-ui) ; not sure what this does yet. supposed to augment lsp-mode.
 (load (concat *dylan* "/workspaces/lsp-dylan/lsp-dylan.el"))
-;; not yet
-;;(add-hook 'dylan-mode-hook 'lsp)
 
+(add-hook 'dylan-mode-hook 'lsp)
+
+;; Uncomment when testing DIME, but otherwise DIME interferes with LSP.
+;; (require 'dime)
+;; (dime-setup '(dime-repl dime-note-tree))
+;; (setq dime-dylan-implementations
+;;       `((opendylan (,(format "%s/opendylan/bin/dswank" *dylan*))
+;;                    :env (,(format "OPEN_DYLAN_USER_REGISTRIES=/tmp/dime-test/registry:%s/workspaces/opendylan/sources/registry"
+;;                                   *dylan*)))))
