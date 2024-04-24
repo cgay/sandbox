@@ -164,8 +164,8 @@ if [[ "$(hostname)" == "Raven.local" ]]; then
 fi
 
 # Specific workspaces
-export DT=${DW}/dylan-tool
-export LSP=${DW}/lsp-dylan
+export DEFT=${DW}/deft
+export LSP=${DW}/lsp/lsp-dylan
 if [[ "$(hostname)" == "Raven.local" ]]; then
     export OD=${DW}/opendylan
 else
