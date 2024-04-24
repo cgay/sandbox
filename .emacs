@@ -27,6 +27,7 @@
  '(emacs-lisp-docstring-fill-column 79)
  '(erc-menu-mode t)
  '(fill-column 79)
+ '(global-hl-line-mode t)
  '(go-fontify-function-calls nil)
  '(go-fontify-variables t)
  '(ibuffer-expert t)
@@ -46,6 +47,7 @@
    '((unnecessary :foreground "gray")
      (deprecated :strike-through t)))
  '(lsp-diagnostics-provider :auto)
+ '(lsp-dylan-extra-command-line-options '("--debug-server" "--debug-opendylan"))
  '(lsp-dylan-extra-server-flags '("--debug-opendylan"))
  '(lsp-server-trace "messages")
  '(package-selected-packages
@@ -57,6 +59,7 @@
      (Syntax . Common-Lisp)))
  '(show-paren-mode nil)
  '(show-trailing-whitespace t)
+ '(slime-truncate-lines nil)
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -64,7 +67,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :extend nil :stipple nil :background "#242424" :foreground "#f6f3e8" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight regular :height 140 :width normal :foundry "nil" :family "Menlo"))))
- '(cursor ((t (:background "red1")))))
+ '(cursor ((t (:background "red1"))))
+ '(hl-line ((t (:extend t :background "DarkOrchid4")))))
 
 (progn
   (require 'package)
@@ -128,7 +132,7 @@
 ;; fancy UI add-ons for lsp-mode too. Might be worth a look later.
 (require 'lsp-mode)
 (use-package lsp-ui) ; not sure what this does yet. supposed to augment lsp-mode.
-(load (concat *dylan* "/workspaces/lsp-dylan/lsp-dylan.el"))
+(load (concat *dylan* "/workspaces/lsp/lsp-dylan/lsp-dylan.el"))
 
 (add-hook 'dylan-mode-hook 'lsp)
 
