@@ -1,12 +1,27 @@
-;; Use f7 to generate the Super key on tty emacs.
-(keymap-global-set "<f7>" nil)
-(keymap-global-set "<f8>" nil)
-(keymap-set function-key-map "<f7>" 'event-apply-super-modifier)
-(keymap-set function-key-map "<f8>" 'event-apply-hyper-modifier)
+(if (> emacs-major-version 27)		; until i upgrade opendylan.org
+    (progn
+      ;; Use f7 to generate the Super key on tty emacs.
+      (keymap-global-set "<f7>" nil)
+      (keymap-global-set "<f8>" nil)
+      (keymap-set function-key-map "<f7>" 'event-apply-super-modifier)
+      (keymap-set function-key-map "<f8>" 'event-apply-hyper-modifier)
 
-(keymap-global-set "C-c c" 'compile)    ; C-c c to compile
-(keymap-global-set "C-c s" 'shell)      ; C-c s to get a shell
-(keymap-global-set "C-x C-b" 'ibuffer)  ; ibuffer instead of list-buffers
+      (keymap-global-set "C-c c" 'compile) ; C-c c to compile
+      (keymap-global-set "C-c s" 'shell)   ; C-c s to get a shell
+      (keymap-global-set "C-x C-b" 'ibuffer) ; ibuffer instead of list-buffers
+      )
+  (progn
+    (global-set-key [f7] nil)
+    (global-set-key [f8] nil)
+    (define-key function-key-map [(f7)] 'event-apply-super-modifier)
+    (define-key function-key-map [(f8)] 'event-apply-hyper-modifier)
+
+    ;; C-c c to compile
+    (global-set-key [?\C-c?c] 'compile)
+
+    ;; C-c s to get a shell
+    (global-set-key [?\C-c?s] 'shell)
+    ))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -116,7 +131,9 @@
   (require 'slime)
   (slime-setup)
   (setq inferior-lisp-program "sbcl")
-  (keymap-global-set "C-c l" 'slime-repl))
+  (if (> emacs-major-version 27)		; until i upgrade opendylan.org
+      (keymap-global-set "C-c l" 'slime-repl)
+    (global-set-key [?\C-c?l] 'slime-repl)))
 
 
 ;;; Dylan
@@ -131,7 +148,8 @@
 ;; https://emacs-lsp.github.io/lsp-mode/page/installation/ has links to various
 ;; fancy UI add-ons for lsp-mode too. Might be worth a look later.
 (require 'lsp-mode)
-(use-package lsp-ui) ; not sure what this does yet. supposed to augment lsp-mode.
+(if (> emacs-major-version 27)
+    (use-package lsp-ui)) ; not sure what this does yet. supposed to augment lsp-mode.
 (load (concat *dylan* "/workspaces/lsp/lsp-dylan/lsp-dylan.el"))
 
 (add-hook 'dylan-mode-hook 'lsp)
