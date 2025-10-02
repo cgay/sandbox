@@ -9,6 +9,7 @@
       (keymap-global-set "C-c c" 'compile) ; C-c c to compile
       (keymap-global-set "C-c s" 'shell)   ; C-c s to get a shell
       (keymap-global-set "C-x C-b" 'ibuffer) ; ibuffer instead of list-buffers
+      (keymap-global-set "C-<tab>" 'other-window)
       )
   (progn
     (global-set-key [f7] nil)
@@ -37,11 +38,12 @@
  '(buffers-menu-show-directories t)
  '(column-number-mode t)
  '(custom-enabled-themes '(wombat))
- '(debug-on-error t)
+ '(debug-on-error nil)
  '(dylan-continuation-indent 2)
  '(emacs-lisp-docstring-fill-column 79)
  '(erc-menu-mode t)
- '(fill-column 79)
+ '(fill-column 89)
+ '(flycheck-error-list-after-refresh-hook '(toggle-truncate-lines))
  '(global-hl-line-mode t)
  '(go-fontify-function-calls nil)
  '(go-fontify-variables t)
@@ -57,16 +59,21 @@
      (mark " "
            (name 16 -1)
            " " filename)))
+ '(ignored-local-variable-values
+   '((whitespace-style quote
+                       (face trailing empty tabs))
+     (whitespace-action)))
  '(indent-tabs-mode nil)
  '(lsp-diagnostics-attributes
    '((unnecessary :foreground "gray")
      (deprecated :strike-through t)))
  '(lsp-diagnostics-provider :auto)
+ '(lsp-dylan-exe-pathname "/Users/cgay/dylan/opendylan-2025.1/bin/dylan-lsp-server")
  '(lsp-dylan-extra-command-line-options '("--debug-server" "--debug-opendylan"))
  '(lsp-dylan-extra-server-flags '("--debug-opendylan"))
  '(lsp-server-trace "messages")
  '(package-selected-packages
-   '(lsp-treemacs flycheck lsp-ui typescript-mode slime markdown-mode marginalia eglot yaml-mode hover lsp-mode protobuf-mode go-mode magit))
+   '(racket-mode lsp-treemacs flycheck lsp-ui typescript-mode slime markdown-mode marginalia eglot yaml-mode hover lsp-mode protobuf-mode go-mode magit))
  '(safe-local-variable-values
    '((Base . 10)
      (Package . CL-PPCRE)
@@ -74,6 +81,7 @@
      (Syntax . Common-Lisp)))
  '(show-paren-mode nil)
  '(show-trailing-whitespace t)
+ '(sldb-initial-restart-limit 20)
  '(slime-truncate-lines nil)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -105,9 +113,35 @@
 ;; Get rid of the bad background for things like ReStructured Text headers when
 ;; inside screen and possibly other times. This probably ought to be
 ;; conditionalized to the display type.
-(let ((frame-background-mode 'light)) (frame-set-background-mode nil))
+(let ((frame-background-mode 'light))
+  (frame-set-background-mode nil))
+
+;;; Better "window" management.  I like to have two windows side-by-side for code and one
+;;; small window below one of those windows for temporary displays like compiler
+;;; warnings.  This, in combination with saving window configurations to registers, and
+;;; winner-mode to go back to previous configs with C-c < seems decent.
+;;; https://www.masteringemacs.org/article/demystifying-emacs-window-manager
+(setq display-buffer-alist
+      ;; Each element is a list of
+      ;; (buffer_matcher list_of_display_functions &optional parameters)
+      '(
+        ;; Try to reuse the same window for all temporary buffers, like dired,
+        ;; compilation, buffer list, etc. Needs work....
+        ("\\*.+\\*"
+         (display-buffer-reuse-mode-window
+          display-buffer-below-selected)
+         (mode . (dired-mode compilation-mode ibuffer-mode))
+         (window-height . 30) ; fixme: fit-window-to-buffer but with max 30
+         ;;(dedicated . t)
+         )))
+
 
 ;;; Shell mode
+
+;; The bash shipped with macOS is ancient due to license issues so use a Homebrew version.
+(if (string-equal (system-name) "Raven.local")
+    (setq explicit-shell-file-name "/opt/homebrew/bin/bash"))
+
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; This makes emacs shell notice when my current directory changes.  In
@@ -123,17 +157,25 @@
 ;; Globally enable winner mode, which binds C-c <Left> to "revert to previous
 ;; window configuration" and C-c <Right> to "revert the revert".
 (winner-mode 1)
+;; The tiny little arrow keys on the Macbook Pro are hard to hit.
+(keymap-global-set "C-c <" 'winner-undo)
+(keymap-global-set "C-c >" 'winner-redo)
 
 
 ;;; SLIME / SWANK
 
 (unless (equal system-type 'windows-nt)
+  (add-to-list 'load-path "~/common-lisp/workspaces/slime")
   (require 'slime)
+  (require 'slime-autoloads)
   (slime-setup)
-  (setq inferior-lisp-program "sbcl")
+  (setq inferior-lisp-program "sbcl --dynamic-space-size 10240")
   (if (> emacs-major-version 27)		; until i upgrade opendylan.org
-      (keymap-global-set "C-c l" 'slime-repl)
-    (global-set-key [?\C-c?l] 'slime-repl)))
+      (progn
+        (keymap-global-set "C-c l" 'slime-repl)
+        (keymap-global-set "C-c C-s" 'slime-selector))
+    (global-set-key [?\C-c?l] 'slime-repl))
+  )
 
 
 ;;; Dylan
@@ -154,6 +196,9 @@
 
 (add-hook 'dylan-mode-hook 'lsp)
 
+;; C-c w is chosen for w=warning, and to match C-c c above.
+(keymap-global-set "C-c w" 'lsp-ui-flycheck-list)
+
 ;; Uncomment when testing DIME, but otherwise DIME interferes with LSP.
 ;; (require 'dime)
 ;; (dime-setup '(dime-repl dime-note-tree))
@@ -161,3 +206,10 @@
 ;;       `((opendylan (,(format "%s/opendylan/bin/dswank" *dylan*))
 ;;                    :env (,(format "OPEN_DYLAN_USER_REGISTRIES=/tmp/dime-test/registry:%s/workspaces/opendylan/sources/registry"
 ;;                                   *dylan*)))))
+(put 'magit-diff-edit-hunk-commit 'disabled nil)
+
+
+;;; C
+
+;;; Indent `case` inside `switch` statements.
+(c-set-offset 'case-label '+)
