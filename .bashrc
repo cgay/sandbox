@@ -115,6 +115,9 @@ if [[ "$(hostname)" == "Raven.local" ]]; then
     # are stored in /opt/homebrew and x86_64 binaries are stored in
     # /usr/local. See the Dylan section later in this file.
     export PATH=/opt/homebrew/bin:${PATH}
+elif [[ "$(hostname)" == "srv1186749" ]]; then
+    # NOTE: this does not include ${PATH}
+    export PATH=/usr/local/bin:/usr/bin:/bin:/home/cgay/bin:/home/cgay/dylan/bin:/opt/opendylan/bin
 fi
 
 # Pass $TERM (usually xterm-256color) through to screen so that colors work

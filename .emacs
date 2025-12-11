@@ -164,7 +164,8 @@
 
 ;;; SLIME / SWANK
 
-(unless (equal system-type 'windows-nt)
+(unless (or (equal system-type 'windows-nt)
+            (equal (system-name) "srv1186749"))
   (add-to-list 'load-path "~/common-lisp/workspaces/slime")
   (require 'slime)
   (require 'slime-autoloads)
