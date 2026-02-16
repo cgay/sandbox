@@ -108,12 +108,13 @@ fi
 
 alias ll='ls -al --color'
 
-export PATH=/usr/local/bin:/usr/bin:/bin:${HOME}/bin:${HOME}/Library/Python/3.9/bin/
+export PATH=${HOME}/bin:/usr/local/bin:/usr/bin:/bin
 
 if [[ "$(hostname)" == "Raven.local" ]]; then
     # Note that there are two versions of Homebrew installed: arm64 binaries
     # are stored in /opt/homebrew and x86_64 binaries are stored in
     # /usr/local. See the Dylan section later in this file.
+    # Note2 that WTF 'brew install llvm' didn't put links in /opt/homebrew/bin??
     export PATH=/opt/homebrew/bin:${PATH}
 elif [[ "$(hostname)" == "srv1186749" ]]; then
     # NOTE: this does not include ${PATH}
@@ -152,6 +153,9 @@ export DYLAN=${HOME}/dylan
 export PATH=${PATH}:${DYLAN}/bin:${DYLAN}/opendylan/bin
 export DW=${DYLAN}/workspaces
 
+# Do I need this anymore?  It's an old version of sphinx and rst2html
+#export PATH=${PATH}:${HOME}/Library/Python/3.9/bin/
+
 if [[ "$(hostname)" == "Raven.local" ]]; then
     # On Raven (macOS) these are necessary to point to the x86_64 version of
     # Homebrew, which in turn is necessary until Open Dylan supports
@@ -166,6 +170,9 @@ if [[ "$(hostname)" == "Raven.local" ]]; then
     alias x86_64_brew=/usr/local/Homebrew/bin/brew
 fi
 
+# I don't usually use this exact command; it's here for reference.
+alias dasboot='CC=/usr/bin/clang DYLANCOMPILER=/Users/cgay/dylan/opendylan-2025.1/bin/dylan-compiler ./configure --prefix=${DYLAN}/opendylan-master --host=x86_64-darwin CFLAGS="-O2 -arch x86_64" --with-gc=/usr/local/lib'
+
 # Specific workspaces
 export DEFT=${DW}/deft
 export LSP=${DW}/lsp/lsp-dylan
@@ -179,10 +186,6 @@ export DP=${DW}/dylan-playground
 
 # Temp fix for regular-expressions library hang problem.
 #export LD_PRELOAD=/home/cgay/libunwind/install/lib/libunwind.so.8
-
-# For dylan-lsp-server we want it to always use the git checkout instead of the
-# sources in the OD installation directory.
-export OPEN_DYLAN_USER_REGISTRIES=${OD}/sources/registry
 
 
 ### Shell prompt
@@ -221,10 +224,3 @@ alias git_gc='git branch --merged | egrep -v "(^\*|master|main|dev)" | xargs git
 
 export PATH=${PATH}:/usr/local/go/bin
 export GOPATH=${HOME}/go
-
-
-### Lisp
-
-export PATH=${HOME}/lisp/sbcl-current/bin:${PATH}
-
-#export PATH=${PATH}:${HOME}/google/protobuf-install-dir/bin

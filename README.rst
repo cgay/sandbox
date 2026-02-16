@@ -1,9 +1,18 @@
+**************
 cgay's sandbox
-==============
+**************
 
 Just a bunch of notes.
 
 Much of this has been moved to various Google Docs.
+
+
+opendylan.org
+=============
+
+Getting the opendylan.org VM up and running....
+
+  * TODO: Changed "xml-parser@0.1" dependency to "xml-parser".
 
 
 Libraries
